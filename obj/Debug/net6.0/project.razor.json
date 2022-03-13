@@ -16331,6 +16331,11 @@
       "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Management\\MainPage.cshtml",
+      "TargetPath": "Views\\Management\\MainPage.cshtml",
+      "FileKind": "mvc"
     }
   ],
   "SerializationFormat": "0.2"
