@@ -28,7 +28,7 @@ builder.Services
 
 var app = builder.Build();
 
-await CreateDbAsync(app);
+CreateDb(app);
 
 if (app.Environment.IsDevelopment())
 {
@@ -57,7 +57,7 @@ app.Run();
 
 
 
-async Task CreateDbAsync(IHost host)
+void CreateDb(IHost host)
 {
     using (var scope = host.Services.CreateScope())
     {
@@ -66,8 +66,9 @@ async Task CreateDbAsync(IHost host)
         try
         {
             var context = services.GetRequiredService<ManagementDbContext>();
+            SeedData.Initialize(context);
             logger.LogDebug("Creating the DB: OK.");
-            await SeedData.Initialize(context);
+            return;
         }
         catch (Exception ex)
         {

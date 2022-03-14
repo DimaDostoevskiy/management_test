@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using asu_management.mvc.Models;
 
 namespace asu_management.mvc.Data;
 

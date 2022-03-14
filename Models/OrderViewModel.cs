@@ -2,8 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace asu_management.mvc.Models
 {
-    public class OrderModel
+    public class OrderViewModel
     {
+
         public int Id { get; set; }
         public string Number { get; set; } = string.Empty;
 

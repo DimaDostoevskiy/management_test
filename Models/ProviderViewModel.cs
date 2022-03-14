@@ -1,8 +1,7 @@
 namespace asu_management.mvc.Models
 {
-public class Provider
-{
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-}
+    public class ProviderViewModel
+    {
+        public string Name { get; set; } = string.Empty;
+    }
 }

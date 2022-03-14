@@ -42,8 +42,6 @@ namespace asu_management.mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProviderId");
-
                     b.ToTable("Orders");
                 });
 
@@ -71,8 +69,6 @@ namespace asu_management.mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
-
                     b.ToTable("OrderItems");
                 });
 
@@ -91,38 +87,6 @@ namespace asu_management.mvc.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Providers");
-                });
-
-            modelBuilder.Entity("asu_management.mvc.Data.Order", b =>
-                {
-                    b.HasOne("asu_management.mvc.Data.Provider", "Provider")
-                        .WithMany("Orders")
-                        .HasForeignKey("ProviderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Provider");
-                });
-
-            modelBuilder.Entity("asu_management.mvc.Data.OrderItem", b =>
-                {
-                    b.HasOne("asu_management.mvc.Data.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("asu_management.mvc.Data.Order", b =>
-                {
-                    b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("asu_management.mvc.Data.Provider", b =>
-                {
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

@@ -16313,6 +16313,21 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Manage\\Details.cshtml",
+      "TargetPath": "Views\\Manage\\Details.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Manage\\Delete.cshtml",
+      "TargetPath": "Views\\Manage\\Delete.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Manage\\Create.cshtml",
+      "TargetPath": "Views\\Manage\\Create.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Home\\Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
@@ -16323,6 +16338,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Manage\\Index.cshtml",
+      "TargetPath": "Views\\Manage\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\_ViewStart.cshtml",
       "TargetPath": "Views\\_ViewStart.cshtml",
       "FileKind": "mvc"
@@ -16330,6 +16350,11 @@
     {
       "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Manage\\Edit.cshtml",
+      "TargetPath": "Views\\Manage\\Edit.cshtml",
       "FileKind": "mvc"
     },
     {
