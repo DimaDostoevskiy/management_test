@@ -1,9 +1,19 @@
 using asu_management.mvc.Data;
+using asu_management.mvc.Repository;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+//Logger
+builder.Host.UseSerilog((ctx, lc) => lc
+    .WriteTo.Console());
+
+//UnitOfWork
+// builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 builder.Services.AddControllers();
 
@@ -22,7 +32,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
 
-CreateDb(app);
+SeedData.Initialize(app);
 
 if (app.Environment.IsDevelopment())
 {
@@ -33,6 +43,8 @@ else
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -48,25 +60,3 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
-
-// Seed Data
-void CreateDb(IHost host)
-{
-    using (var scope = host.Services.CreateScope())
-    {
-        var services = scope.ServiceProvider;
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        try
-        {
-            var context = services.GetRequiredService<ManagementDbContext>();
-            SeedData.Initialize(context);
-            logger.LogDebug("Creating the DB: OK.");
-            return;
-        }
-        catch (Exception ex)
-        {
-            logger.LogError($"Creating the DB: ERROR | {ex.GetType()} | {ex.Message}");
-            return;
-        }
-    }
-}

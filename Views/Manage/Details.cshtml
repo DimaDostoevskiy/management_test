@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Order: @Model?.Name from @Model?.Date</h1>
+<h1>Order: @Model.Number from @Model.Date</h1>
 
 @if (Model != null)
 {
@@ -18,6 +18,6 @@
     }
 }
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

@@ -26,7 +26,7 @@
         <tr class="table-dark">
           <td>@order.ProviderId</td>
           <td>@order.Date</td>
-          <td>@order.Name</td>
+          <td>@order.Number</td>
           <td>
             <a asp-action="Edit" asp-route-id="@order.Id">Edit</a> |
             <a asp-action="Details" asp-route-id="@order.Id">Details</a> |
@@ -34,6 +34,10 @@
           </td>
         </tr>
       }
+    }
+    else
+    {
+      <h4>No orders</h4>
     }
   </tbody>
 </table>

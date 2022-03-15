@@ -31,9 +31,9 @@ namespace asu_management.mvc.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2(7)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Number")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProviderId")
@@ -43,7 +43,7 @@ namespace asu_management.mvc.Migrations
 
                     b.HasIndex("ProviderId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("asu_management.mvc.Data.OrderItem", b =>
@@ -61,7 +61,7 @@ namespace asu_management.mvc.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<string>("Unit")
                         .HasColumnType("nvarchar(max)");
@@ -70,7 +70,7 @@ namespace asu_management.mvc.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItem");
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("asu_management.mvc.Data.Provider", b =>

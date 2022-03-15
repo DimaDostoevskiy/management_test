@@ -283,3 +283,12 @@ C:\Projects\ACUManagement\asu_management.mvc\obj\Debug\net6.0\ref\asu_management
 C:\Projects\ACUManagement\asu_management.mvc\obj\Debug\net6.0\asu_management.mvc.pdb
 C:\Projects\ACUManagement\asu_management.mvc\obj\Debug\net6.0\asu_management.mvc.genruntimeconfig.cache
 C:\Projects\ACUManagement\asu_management.mvc\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Projects\ACUManagement\asu_management.mvc\bin\Debug\net6.0\Serilog.dll
+C:\Projects\ACUManagement\asu_management.mvc\bin\Debug\net6.0\Serilog.AspNetCore.dll
+C:\Projects\ACUManagement\asu_management.mvc\bin\Debug\net6.0\Serilog.Extensions.Hosting.dll
+C:\Projects\ACUManagement\asu_management.mvc\bin\Debug\net6.0\Serilog.Extensions.Logging.dll
+C:\Projects\ACUManagement\asu_management.mvc\bin\Debug\net6.0\Serilog.Formatting.Compact.dll
+C:\Projects\ACUManagement\asu_management.mvc\bin\Debug\net6.0\Serilog.Settings.Configuration.dll
+C:\Projects\ACUManagement\asu_management.mvc\bin\Debug\net6.0\Serilog.Sinks.Console.dll
+C:\Projects\ACUManagement\asu_management.mvc\bin\Debug\net6.0\Serilog.Sinks.Debug.dll
+C:\Projects\ACUManagement\asu_management.mvc\bin\Debug\net6.0\Serilog.Sinks.File.dll
