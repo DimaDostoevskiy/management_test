@@ -1,7 +1,7 @@
 namespace asu_management.mvc.Data;
 
-public class Provider
+public class Provider : BaseEntity
 {
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
+    public string? Name { get; set; }
+    public ICollection<Order>? Orders { get; set; }
 }

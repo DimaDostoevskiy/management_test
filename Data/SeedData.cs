@@ -6,11 +6,12 @@ namespace asu_management.mvc.Data
     {
         public static void Initialize(ManagementDbContext context)
         {
+            context.Database.EnsureCreated();
+            
             if (context.Providers.Any())
             {
                 return;
             }
-            context.Database.EnsureCreated();
 
             context.Providers.AddRange
             (

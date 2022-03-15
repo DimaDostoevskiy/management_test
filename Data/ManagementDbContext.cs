@@ -11,5 +11,4 @@ public class ManagementDbContext : DbContext
     }
     public DbSet<Provider> Providers { set; get; }
     public DbSet<Order> Orders { set;  get; }
-    public DbSet<OrderItem> OrderItems { set; get; }
 }

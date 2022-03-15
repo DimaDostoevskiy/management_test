@@ -1,4 +1,4 @@
-@model IEnumerable<asu_management.mvc.Models.OrderViewModel>
+@model IEnumerable<asu_management.mvc.Data.Order>
 
 @{
     ViewData["Title"] = "Index";
@@ -19,7 +19,7 @@
                 @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProviderId)
+                @Html.DisplayNameFor(model => model.Provider.Id)
             </th>
             <th></th>
         </tr>
@@ -35,7 +35,7 @@
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ProviderId)
+                    @Html.DisplayFor(modelItem => item.Provider.Id)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

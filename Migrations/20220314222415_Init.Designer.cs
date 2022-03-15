@@ -12,7 +12,7 @@ using asu_management.mvc.Data;
 namespace asu_management.mvc.Migrations
 {
     [DbContext(typeof(ManagementDbContext))]
-    [Migration("20220314015616_Init")]
+    [Migration("20220314222415_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,13 +36,14 @@ namespace asu_management.mvc.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Number")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProviderId")
+                    b.Property<int?>("ProviderId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProviderId");
 
                     b.ToTable("Orders");
                 });
@@ -56,22 +57,22 @@ namespace asu_management.mvc.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Unit")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderItems");
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItem");
                 });
 
             modelBuilder.Entity("asu_management.mvc.Data.Provider", b =>
@@ -83,12 +84,39 @@ namespace asu_management.mvc.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Providers");
+                });
+
+            modelBuilder.Entity("asu_management.mvc.Data.Order", b =>
+                {
+                    b.HasOne("asu_management.mvc.Data.Provider", "Provider")
+                        .WithMany("Orders")
+                        .HasForeignKey("ProviderId");
+
+                    b.Navigation("Provider");
+                });
+
+            modelBuilder.Entity("asu_management.mvc.Data.OrderItem", b =>
+                {
+                    b.HasOne("asu_management.mvc.Data.Order", "Order")
+                        .WithMany("Items")
+                        .HasForeignKey("OrderId");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("asu_management.mvc.Data.Order", b =>
+                {
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("asu_management.mvc.Data.Provider", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

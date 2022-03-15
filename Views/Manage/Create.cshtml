@@ -1,4 +1,4 @@
-@model asu_management.mvc.Models.OrderViewModel
+@model asu_management.mvc.Data.Order
 
 @{
     ViewData["Title"] = "Create";
@@ -21,11 +21,6 @@
                 <label asp-for="Date" class="control-label"></label>
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProviderId" class="control-label"></label>
-                <input asp-for="ProviderId" class="form-control" />
-                <span asp-validation-for="ProviderId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

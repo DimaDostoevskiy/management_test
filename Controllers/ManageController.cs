@@ -14,16 +14,17 @@ namespace asu_management.mvc.Controllers
 {
     public class ManageController : Controller
     {
-        private readonly Repository _repository;
+        private IUnitOfWork _unitOfWork;
         public ManageController(ManagementDbContext context)
         {
-            _repository = new Repository(context);
+            _unitOfWork = new UnitOfWork(context);
         }
 
         // GET: Manage
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _repository.GetAllOrders());
+            var list = _unitOfWork.Orders.GetAll();
+            return View(list);
         }
 
         //     // GET: Manage/Details/5
@@ -44,7 +45,6 @@ namespace asu_management.mvc.Controllers
         //         return View(orderModel);
         //     }
 
-        // GET: Manage/Create
         public IActionResult Create()
         {
             return View();
@@ -52,17 +52,10 @@ namespace asu_management.mvc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Number,Date")] OrderViewModel order)
+        public IActionResult Create([Bind("Number,Date")] Order order)
         {
-            if (ModelState.IsValid)
-            {
-                if (await _repository.Add(order))
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-                return View(order);
-            }
-            return View(order);
+            _unitOfWork.Orders.Create(order);
+            return RedirectToAction(nameof(Index));
         }
 
         //     // GET: Manage/Edit/5

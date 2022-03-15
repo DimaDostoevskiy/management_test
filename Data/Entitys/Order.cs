@@ -1,10 +1,11 @@
 namespace asu_management.mvc.Data
 {
-    public class Order
+    public class Order : BaseEntity
     {
-        public int Id { get; set; }
-        public string Number { get; set; } = string.Empty;
+        public string? Number { get; set; }
         public DateTime Date { get; set; }
-        public int ProviderId { get; set; }
+
+        public Provider? Provider { get; set; }
+        public ICollection<OrderItem>? Items { get; set; }
     }
 }

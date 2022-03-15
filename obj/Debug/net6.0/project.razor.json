@@ -16356,11 +16356,6 @@
       "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Manage\\Edit.cshtml",
       "TargetPath": "Views\\Manage\\Edit.cshtml",
       "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Management\\MainPage.cshtml",
-      "TargetPath": "Views\\Management\\MainPage.cshtml",
-      "FileKind": "mvc"
     }
   ],
   "SerializationFormat": "0.2"
