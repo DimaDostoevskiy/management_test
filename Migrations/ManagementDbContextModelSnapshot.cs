@@ -33,17 +33,17 @@ namespace asu_management.mvc.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Number")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProviderId")
+                    b.Property<int>("ProviderId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProviderId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("asu_management.mvc.Data.OrderItem", b =>
@@ -57,7 +57,7 @@ namespace asu_management.mvc.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrderId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Quantity")
@@ -93,7 +93,9 @@ namespace asu_management.mvc.Migrations
                 {
                     b.HasOne("asu_management.mvc.Data.Provider", "Provider")
                         .WithMany("Orders")
-                        .HasForeignKey("ProviderId");
+                        .HasForeignKey("ProviderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Provider");
                 });
@@ -102,7 +104,9 @@ namespace asu_management.mvc.Migrations
                 {
                     b.HasOne("asu_management.mvc.Data.Order", "Order")
                         .WithMany("Items")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Order");
                 });

@@ -1,3 +1,4 @@
+using asu_management.mvc.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace asu_management.mvc.Data
@@ -6,22 +7,16 @@ namespace asu_management.mvc.Data
     {
         public static void Initialize(ManagementDbContext context)
         {
-            context.Database.EnsureCreated();
-            
-            if (context.Providers.Any())
-            {
-                return;
-            }
+            var unitOfWork = new UnitOfWork(context);
+            var providers = unitOfWork.Providers.GetAll();
 
-            context.Providers.AddRange
-            (
-                new Provider() { Name = "Provider1" },
-                new Provider() { Name = "Provider2" },
-                new Provider() { Name = "Provider3" },
-                new Provider() { Name = "Provider4" }
-            );
-            
-            context.SaveChanges();
+            if (providers == null)
+            {
+                unitOfWork.Providers.Create((new Provider() { Name = "Provider1" }));
+                unitOfWork.Providers.Create((new Provider() { Name = "Provider2" }));
+                unitOfWork.Providers.Create((new Provider() { Name = "Provider3" }));
+                unitOfWork.Providers.Create((new Provider() { Name = "Provider4" }));
+            }
         }
     }
 }

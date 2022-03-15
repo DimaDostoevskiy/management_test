@@ -1,5 +1,4 @@
 using asu_management.mvc.Data;
-using asu_management.mvc.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace asu_management.mvc.Services
@@ -14,26 +13,52 @@ namespace asu_management.mvc.Services
             _context = context;
             _dbSet = context.Set<T>();
         }
-        public void Create(T entity)
+        public void Create(T? entity)
         {
+            if(entity == null)
+            {
+                return;
+            }
             _dbSet.Add(entity);
             _context.SaveChanges();
         }
-        public IEnumerable<T> GetAll()
+        public List<T>? GetAll()
         {
             return _dbSet.ToList();;
         }
-        public T GetById(int id)
+        public T? GetById(int? id)
         {
-            throw new NotImplementedException();
+            if(id == null)
+            {
+                return null;
+            }
+            return _dbSet.FirstOrDefault(item => item.Id == id);
         }
-        public void Update(T entity)
+        public T? GetByName(string? name)
         {
-            throw new NotImplementedException();
+            if(name == null)
+            {
+                return null;
+            }
+            return _dbSet.FirstOrDefault(item => item.Name == name);
         }
-        public void Delete(T entity)
+        public void Update(T? entity)
         {
-            throw new NotImplementedException();
+            if(entity == null)
+            {
+                return;
+            }
+            _dbSet.Update(entity);
+            _context.SaveChanges();
+        }
+        public void Delete(T? entity)
+        {
+            if(entity == null)
+            {
+                return;
+            }
+            _dbSet.Remove(entity);
+            _context.SaveChanges();
         }
     }
 }

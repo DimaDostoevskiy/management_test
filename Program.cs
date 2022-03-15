@@ -5,24 +5,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services
-    .AddControllers();
+builder.Services.AddControllers();
 
-builder.Services
-    .AddRazorPages();
+builder.Services.AddRazorPages();
 
-builder.Services
-    .AddDbContext<ManagementDbContext>(options => options
+builder.Services.AddDbContext<ManagementDbContext>(options => options
         .UseSqlServer("name=ConnectionStrings:DefaultConnection"));
 
-builder.Services
-    .AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services
-    .AddControllersWithViews();
+builder.Services.AddControllersWithViews();
 
-builder.Services
-    .AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Configure the HTTP request pipeline.
 
@@ -55,8 +49,7 @@ app.MapRazorPages();
 
 app.Run();
 
-
-
+// Seed Data
 void CreateDb(IHost host)
 {
     using (var scope = host.Services.CreateScope())
@@ -73,6 +66,7 @@ void CreateDb(IHost host)
         catch (Exception ex)
         {
             logger.LogError($"Creating the DB: ERROR | {ex.GetType()} | {ex.Message}");
+            return;
         }
     }
 }
