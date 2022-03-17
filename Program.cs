@@ -1,5 +1,6 @@
 using asu_management.mvc.Data;
-using asu_management.mvc.Repository;
+using asu_management.mvc.Domain;
+using asu_management.mvc.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -7,20 +8,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-//Logger
+// Logger
 builder.Host.UseSerilog((ctx, lc) => lc
-    .WriteTo.Console());
+    .WriteTo.Console()
+    );
 
-//UnitOfWork
-// builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+// Repositiry
+builder.Services.AddScoped<IRepository<OrderViewModel>, OrderRepository>();
 
 builder.Services.AddControllers();
 
 builder.Services.AddRazorPages();
 
-builder.Services.AddDbContext<ManagementDbContext>(options => options
-        .UseSqlServer("name=ConnectionStrings:DefaultConnection"));
+builder.Services.AddDbContext<ManagementDbContext>(options => 
+            options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -56,7 +57,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Manage}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();

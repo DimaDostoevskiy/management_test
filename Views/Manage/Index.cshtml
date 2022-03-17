@@ -1,43 +1,66 @@
-@model List<asu_management.mvc.Data.Order>
+@model asu_management.mvc.ViewModels.OrderViewModel
 
 @{
   ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
 <p>
-  <a asp-action="Create">Create New</a>
+  <a asp-action="Create" class="btn btn-primary">Create New Order</a>
 </p>
-<table class="table">
+
+<form asp-action="SortOrders" method="post">
+  <div class="row">
+
+    <div class="col">
+      <input asp-for="Number" class="form-control" placeholder="order number" />
+    </div>
+
+    <div class="col">
+      <input asp-for="StartSortDate" class="form-control" />
+    </div>
+
+    <div class="col">
+      <input asp-for="EndSortDate" class="form-control" />
+    </div>
+
+    <div class="col">
+      <select asp-for="Provider.Id" class="form-select" asp-items="@Model.Providers"></select>
+    </div>
+
+    <div class="col">
+      <input type="submit" value="Filter" class="btn btn-primary w-100" />
+    </div>
+
+    <div class="col">
+      <a asp-action="Index" class="btn btn-primary w-100">Reset Filter</a>
+    </div>
+
+  </div>
+</form>
+
+<table class="table table-light table-hover">
+
   <thead>
     <tr>
-      <th scope="col">Provider</th>
+      <th scope="col">Number</th>
       <th scope="col">Date</th>
-      <th scope="col">Name</th>
+      <th scope="col">Provider</th>
       <th scope="col"></th>
     </tr>
   </thead>
+
   <tbody>
-    @if (Model != null)
+    @foreach (var item in Model.Orders)
     {
-      @foreach (var order in Model)
-      {
-        <tr class="table-dark">
-          <td>@order.ProviderId</td>
-          <td>@order.Date</td>
-          <td>@order.Number</td>
+      <tr>
+          <td>@item.Number</td>
+          <td>@item.Date</td>
+          <td>@item.Provider.Name</td>
           <td>
-            <a asp-action="Edit" asp-route-id="@order.Id">Edit</a> |
-            <a asp-action="Details" asp-route-id="@order.Id">Details</a> |
-            <a asp-action="Delete" asp-route-id="@order.Id">Delete</a>
+            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary w-100">Details</a>
           </td>
-        </tr>
-      }
-    }
-    else
-    {
-      <h4>No orders</h4>
+      </tr>
     }
   </tbody>
+
 </table>

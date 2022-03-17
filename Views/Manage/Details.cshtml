@@ -1,23 +1,40 @@
-@model asu_management.mvc.Data.Order
+@model asu_management.mvc.ViewModels.OrderViewModel
 
 @{
-    ViewData["Title"] = "Details";
+  ViewData["Title"] = "Details";
 }
 
-<h1>Order: @Model.Number from @Model.Date</h1>
+<h4>Order: @Model.Number</h4>
+<h4>Date:  @Model.Date</h4>
 
-@if (Model != null)
-{
-    @foreach (var item in Model.Items)
+<a class="btn btn-primary" asp-action="CreateItem" asp-route-id="@Model.Id">Edit</a>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Unit</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var order in Model.Items)
     {
-        <div>
-            <h5>@item.Name</h5>
-            <h5>@item.Quantity</h5>
-            <h5>@item.Unit</h5>
-        </div>
+      <tr class="table-dark">
+        <td>@order.Name</td>
+        <td>@order.Quantity</td>
+        <td>@order.Unit</td>
+        <td>
+          <a asp-action="Edit" asp-route-id="@order.Id">Edit</a> |
+          <a asp-action="Details" asp-route-id="@order.Id">Details</a> |
+          <a asp-action="Delete" asp-route-id="@order.Id">Delete</a>
+        </td>
+      </tr>
     }
-}
+  </tbody>
+</table>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+  <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+  <a asp-action="Index">Back to List</a>
 </div>

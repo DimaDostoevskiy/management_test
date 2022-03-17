@@ -1,5 +1,4 @@
 namespace asu_management.mvc.Data;
-
 public class OrderItem : BaseEntity
 {
     public string Name { get; set; }
@@ -7,5 +6,4 @@ public class OrderItem : BaseEntity
     public string Unit { get; set; }
     public Order Order { get; set; }
     public int OrderId { get; set; }
-
 }

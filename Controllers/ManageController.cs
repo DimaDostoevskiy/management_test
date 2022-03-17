@@ -1,79 +1,91 @@
 using Microsoft.AspNetCore.Mvc;
-using asu_management.mvc.Data;
-using asu_management.mvc.Repository;
+using asu_management.mvc.ViewModels;
+using asu_management.mvc.Domain;
 
 namespace asu_management.mvc.Controllers
 {
     public class ManageController : Controller
     {
-        private IOrderRepository _context;
-        public ManageController(IOrderRepository context)
+        private IRepository<OrderViewModel> _repository;
+        public ManageController(IRepository<OrderViewModel> context)
         {
-            _context = context;
+            _repository = context;
         }
-        // GET: Manage
+
+        // GET: /Manage
         public async Task<IActionResult> Index()
         {
-            return View(await _context.GetAllAsync());
+            var model = new OrderViewModel();
+            model.Orders = await _repository.GetAllAsync();
+            return View(model);
+        }
+        // POST: /Manage/
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SortOrders(OrderViewModel model)
+        {
+            model.Orders = await _repository.SortAsync(model);
+            return View("Index", model);
         }
         // GET: Manage/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            return View(await _context.GetByIdWithItemsAsync(id));
+            return View(await _repository.GetByIdAsync(id));
         }
-        // public IActionResult Create()
-        // {
-        //     return View();
-        // }
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public IActionResult Create([Bind("Date,Name,ProviderId")] Order newOrder)
-        // {
-        //     if (ModelState.IsValid)
-        //     {
-        //         _context.Orders.Create(newOrder);
+        // GET: Manage/Create
+        public IActionResult Create()
+        {
+            return View(new OrderViewModel());
+        }
 
-        //         return RedirectToAction(nameof(Index));
-        //     }
-        //     return View(newOrder);
-        // }
-        // // GET: Manage/Edit/5
-        // public async Task<IActionResult> Edit(int id)
-        // {
-        //     return View(await _context.Orders.GetByIdAsync(id));
-        // }
-        // // POST: Manage/Edit/5
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public IActionResult Edit(int id, [Bind("Id,Name,Date,ProviderId")] Order order)
-        // {
-        //     if (id != order.Id)
-        //     {
-        //         return NotFound();
-        //     }
+        // POST: /Manage/Create/
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(OrderViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
 
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return View(order);
-        //     }
+                return await _repository.Create(model) 
+                ? RedirectToAction(nameof(Index)) 
+                : RedirectToAction(nameof(Error));
+            }
+            return View(model);
+        }
+        // GET: Manage/Edit/5
+        public async Task<IActionResult> Edit(int id)
+        {
+            return View(await _repository.GetByIdAsync(id));
+        }
+        // POST: Manage/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, [Bind("Id,Name,Date,ProviderId")]  OrderViewModel model)
+        {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
 
-        //     _context.Orders.Update(order);
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-        //     return RedirectToAction(nameof(Index));
-        // }
-        // // GET: Manage/Delete/5
-        // public async Task<IActionResult> Delete(int id)
-        // {
-        //     var order = await _context.Orders.GetByIdAsync(id);
+            _repository.Update(model);
 
-        //     if (order == null)
-        //     {
-        //         return NotFound();
-        //     }
+            return RedirectToAction(nameof(Index));
+        }
 
-        //     await _context.Orders.Delete(order);
-
-        //     return RedirectToAction(nameof(Index));
-        // }
+        // GET: Manage/Delete/5
+        public async Task<IActionResult> Delete(OrderViewModel orderModel)
+        {
+            return await _repository.Delete(orderModel) ? 
+                RedirectToAction(nameof(Index)) : RedirectToAction(nameof(Error)) ;
+        }
+        public IActionResult Error()
+        {
+            return View();
+        }
     }
 }

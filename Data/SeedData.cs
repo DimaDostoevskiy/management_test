@@ -1,3 +1,7 @@
+using asu_management.mvc.Domain;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Serilog;
+
 namespace asu_management.mvc.Data
 {
     public static class SeedData
@@ -10,12 +14,20 @@ namespace asu_management.mvc.Data
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
-                var context = serviceScope.ServiceProvider.GetService<ManagementDbContext>();
-
-                context.Database.EnsureCreated();
-
-                if (!context.Providers.Any())
+                try
                 {
+                    var context = serviceScope.ServiceProvider.GetService<ManagementDbContext>();
+
+                    context.Database.EnsureCreated();
+
+                    if (context.Providers.Any())
+                    {
+                        OrderRepository.ProvidersList = new SelectList(context.Providers.ToList(), "Id", "Name");
+
+                        Log.Information("_____Datebase is not empty");
+                        
+                        return;
+                    }
 
                     var providers = new List<Provider>()
                     {
@@ -32,7 +44,7 @@ namespace asu_management.mvc.Data
                         new Order() { Number = "0001", Date = DateTime.UtcNow.AddDays(-1), Provider = providers[0] },
                         new Order() { Number = "0002", Date = DateTime.UtcNow.AddDays(-5), Provider = providers[1] },
                         new Order() { Number = "0003", Date = DateTime.UtcNow.AddDays(-10),Provider = providers[1] },
-                        new Order() { Number = "0004", Date = DateTime.UtcNow.AddDays(-30),Provider = providers[2] }
+                        new Order() { Number = "0004", Date = DateTime.UtcNow.AddDays(-30),Provider = providers[2] },
                     };
                     context.Orders.AddRange(orders);
                     context.SaveChanges();
@@ -43,10 +55,19 @@ namespace asu_management.mvc.Data
                         new OrderItem() { Name = "Item2", Quantity = 15.256M, Unit = "Unit2", Order = orders[0] },
                         new OrderItem() { Name = "Item3", Quantity = 15.256M, Unit = "Unit3", Order = orders[1] },
                         new OrderItem() { Name = "Item4", Quantity = 15.256M, Unit = "Unit4", Order = orders[1] },
-                        new OrderItem() { Name = "Item5", Quantity = 15.256M, Unit = "Unit5", Order = orders[2] }
+                        new OrderItem() { Name = "Item5", Quantity = 15.256M, Unit = "Unit5", Order = orders[2] },
                     };
                     context.OrderItems.AddRange(orderItems);
                     context.SaveChanges();
+
+                    Log.Information("_____SeedData.Initialize_0k");
+
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal($"_____SeedData.Initialize_{ex.Message}");
+                    return;
                 }
             }
         }
