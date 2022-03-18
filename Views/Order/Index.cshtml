@@ -1,18 +1,18 @@
-@model asu_management.mvc.ViewModels.OrderViewModel
+@model OrderViewModel
 
 @{
   ViewData["Title"] = "Index";
 }
 
 <p>
-  <a asp-action="Create" class="btn btn-primary">Create New Order</a>
+  <a asp-controller="Order" asp-action="Create" class="btn btn-primary">Create New Order</a>
 </p>
 
 <form asp-action="SortOrders" method="post">
   <div class="row">
 
     <div class="col">
-      <input asp-for="Number" class="form-control" placeholder="order number" />
+      <input asp-for="SortNumber" class="form-control" placeholder="order number" />
     </div>
 
     <div class="col">
@@ -24,7 +24,7 @@
     </div>
 
     <div class="col">
-      <select asp-for="Provider.Id" class="form-select" asp-items="@Model.Providers"></select>
+      <select asp-for="ProviderId" class="form-select" asp-items="@Model.Providers"></select>
     </div>
 
     <div class="col">
@@ -50,15 +50,15 @@
   </thead>
 
   <tbody>
-    @foreach (var item in Model.Orders)
+    @for (int i = 0; i < Model.Orders.Length; i++)
     {
       <tr>
-          <td>@item.Number</td>
-          <td>@item.Date</td>
-          <td>@item.Provider.Name</td>
-          <td>
-            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary w-100">Details</a>
-          </td>
+        <td>@Model.Orders[i].Number</td>
+        <td>@Model.Orders[i].Date</td>
+        <td>@Model.Orders[i].ProviderName</td>
+        <td>
+          <a asp-action="Details" asp-route-id="@Model.Orders[i].Id" class="btn btn-outline-primary w-100">Details</a>
+        </td>
       </tr>
     }
   </tbody>

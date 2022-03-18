@@ -16308,11 +16308,6 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Home\\Privacy.cshtml",
-      "TargetPath": "Views\\Home\\Privacy.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Manage\\Details.cshtml",
       "TargetPath": "Views\\Manage\\Details.cshtml",
       "FileKind": "mvc"
@@ -16325,11 +16320,6 @@
     {
       "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Manage\\Create.cshtml",
       "TargetPath": "Views\\Manage\\Create.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Home\\Index.cshtml",
-      "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
     },
     {

@@ -1,6 +1,6 @@
 using asu_management.mvc.Data;
 using asu_management.mvc.Domain;
-using asu_management.mvc.ViewModels;
+using asu_management.mvc.Models;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -14,7 +14,8 @@ builder.Host.UseSerilog((ctx, lc) => lc
     );
 
 // Repositiry
-builder.Services.AddScoped<IRepository<OrderViewModel>, OrderRepository>();
+builder.Services.AddScoped<IRepository<OrderModel>, OrderRepository>();
+builder.Services.AddScoped<IRepository<ItemModel>, ItemRepository>();
 
 builder.Services.AddControllers();
 
@@ -41,7 +42,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Order/Error");
     app.UseHsts();
 }
 
@@ -57,7 +58,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Manage}/{action=Index}/{id?}");
+    pattern: "{controller=Order}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();

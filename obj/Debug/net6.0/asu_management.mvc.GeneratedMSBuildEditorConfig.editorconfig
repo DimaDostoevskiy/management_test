@@ -15,24 +15,24 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Projects\ACUManagement\asu_management.mvc
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Projects/ACUManagement/asu_management.mvc/Views/Manage/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlXENyZWF0ZS5jc2h0bWw=
+[C:/Projects/ACUManagement/asu_management.mvc/Views/Order/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/ACUManagement/asu_management.mvc/Views/Manage/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlXERlbGV0ZS5jc2h0bWw=
+[C:/Projects/ACUManagement/asu_management.mvc/Views/Order/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/ACUManagement/asu_management.mvc/Views/Manage/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlXERldGFpbHMuY3NodG1s
+[C:/Projects/ACUManagement/asu_management.mvc/Views/Order/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/ACUManagement/asu_management.mvc/Views/Manage/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlXEVkaXQuY3NodG1s
+[C:/Projects/ACUManagement/asu_management.mvc/Views/Order/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/ACUManagement/asu_management.mvc/Views/Manage/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlXEluZGV4LmNzaHRtbA==
+[C:/Projects/ACUManagement/asu_management.mvc/Views/Order/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Projects/ACUManagement/asu_management.mvc/Views/Shared/Error.cshtml]

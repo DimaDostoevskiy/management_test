@@ -1,4 +1,4 @@
-@model asu_management.mvc.ViewModels.OrderViewModel
+@model OrderModel
 
 @{
     ViewData["Title"] = "Create Order";
@@ -10,10 +10,11 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
+            
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <select asp-for="Provider.Id" class="form-control" asp-items="@Model.Providers"></select>
+                @* <select asp-for="ProviderId" class="form-select" asp-items="@Model.Providers"></select> *@
             </div>
 
             <div class="form-group">
@@ -31,6 +32,7 @@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+
         </form>
     </div>
 </div>
