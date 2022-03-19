@@ -5,6 +5,5 @@ namespace asu_management.mvc.ViewModels
         public OrderViewModel Order { get; set; }
         public string SortName { get; set; }
         public string SortUnit { get; set; }
-        public string SortQuantity { get; set; }
     }
 }

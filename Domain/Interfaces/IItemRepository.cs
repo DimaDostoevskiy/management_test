@@ -6,7 +6,6 @@ namespace asu_management.mvc.Domain
     {
         Task<bool> CreateItemAsync(ItemViewModel model);
         Task<ItemViewModel> GetItemByIdAsync(int id);
-        Task<ItemViewModel[]> GetAllItemsAsync();
         Task<ItemViewModel[]> SortItemsAsync(DetailsOrderViewModel model);
         Task<bool> UpdateItemAsync(ItemViewModel model);
         Task<bool> DeleteItemAsync(int id);

@@ -5,55 +5,57 @@
 }
 
 <div class="row">
-  <h4> Order: @Model.Order.Number</h4>
+  <h4>Number: @Model.Order.Number</h4>
 </div>
 <div class="row">
-  <h4> Date: @Model.Order.Date</h4>
+  <h4>Date: @Model.Order.Date </h4>
 </div>
 <div class="row">
-  <h4> Provider: @Model.Order.ProviderName</h4>
-</div>
-<div class="row">
-  <h4> Id: @Model.Order.Id</h4>
+  <h4>Provider: @Model.Order.ProviderName) </h4>
 </div>
 
-<div>
-  <div class="row">
-    <div class="col">
-        <a asp-controller="Item" asp-action="CreateItem" asp-route-orderId="@Model.Order.Id"
-        class="btn btn-primary">Add Item</a>
-    </div>
-    <div class="col">
-      <a asp-action="Edit" asp-route-id="@Model.Order.Id" class="btn btn-primary">Edit</a>
-    </div>
-    <div class="col">
-      <a asp-action="Delete" asp-route-id="@Model.Order.Id" class="btn btn-danger">Delete</a>
-    </div>
-    <div class="col">
-      <a asp-action="Index" class="btn btn-primary">Back to List</a>
-    </div>
+<div class="row">
+  <div class="col">
+    <a asp-controller="Item" asp-action="CreateItem" asp-route-id="@Model.Order.Id" class="btn btn-primary">Add
+      Item</a>
   </div>
+  <div class="col">
+    <a asp-action="Edit" asp-route-id="@Model.Order.Id" class="btn btn-primary">Edit</a>
+  </div>
+  <div class="col">
+    <a asp-action="Delete" asp-route-id="@Model.Order.Id" class="btn btn-danger">Delete</a>
+  </div>
+  <div class="col">
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+  </div>
+</div>
 
-
-  <table class="table">
-    <thead>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Unit</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (int i = 0; i < Model.Order.Items.Length; i++)
+    {
       <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Unit</th>
+        <td>@Model.Order.Items[i].Name</td>
+        <td>@Model.Order.Items[i].Quantity</td>
+        <td>@Model.Order.Items[i].Unit</td>
+        <td scope="col-1">
+          <a asp-controller="Item" asp-action="EditItem" asp-route-id="@Model.Order.Items[i].Id"
+          class="btn btn-primary w-100">Edit</a>
+        </td>
+        <td>
+          <a asp-controller="Item" asp-action="DeleteItem" asp-route-id="@Model.Order.Items[i].Id"
+          class="btn btn-danger w-100">Delete</a>
+        </td>
       </tr>
-    </thead>
-    <tbody>
-      @for (int i = 0; i < Model.Order.Items.Length; i++)
-      {
-        <tr>
-          <td>@Model.Order.Items[i].Name</td>
-          <td>@Model.Order.Items[i].Quantity</td>
-          <td>@Model.Order.Items[i].Unit</td>
-          <td>
-            <a asp-controller="Item" asp-action="Edit" asp-route-id="@Model.Order.Items[i].Id"class="btn btn-primary">Edit</a>
-          </td>
-        </tr>
-      }
-    </tbody>
-  </table>
+    }
+  </tbody>
+</table>
