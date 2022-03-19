@@ -1,4 +1,4 @@
-@model OrderViewModel
+@model IndexOrderViewModel
 
 @{
   ViewData["Title"] = "Index";
@@ -8,7 +8,7 @@
   <a asp-controller="Order" asp-action="Create" class="btn btn-primary">Create New Order</a>
 </p>
 
-<form asp-action="SortOrders" method="post">
+<form asp-action="Index" method="post">
   <div class="row">
 
     <div class="col">
@@ -45,6 +45,7 @@
       <th scope="col">Number</th>
       <th scope="col">Date</th>
       <th scope="col">Provider</th>
+      <th scope="col">Items</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -56,6 +57,7 @@
         <td>@Model.Orders[i].Number</td>
         <td>@Model.Orders[i].Date</td>
         <td>@Model.Orders[i].ProviderName</td>
+        <td>@Model.Orders[i].Items.Length</td>
         <td>
           <a asp-action="Details" asp-route-id="@Model.Orders[i].Id" class="btn btn-outline-primary w-100">Details</a>
         </td>

@@ -1,16 +1,20 @@
-using asu_management.mvc.Domain;
-using asu_management.mvc.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace asu_management.mvc.ViewModels
 {
-    public class ItemViewModel : BaseModel
+    public class ItemViewModel
     {
-        public OrderModel Order { get; set; }
-        public string SortName { get; set; }
-        public string SortUnit { get; set; }
-        public string SortQuantity { get; set; }
-        public ItemModel[] Items { get; set; }
-        public SelectList Providers { get; set; } = OrderRepository.ProvidersList;
+        public int Id { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string Name { get; set; }
+        
+        [Required]
+        [StringLength(50)]
+        public string Unit { get; set; }
+        public decimal Quantity { get; set; }
+        public int OrderId { get; set; }
+        public string OrderNumber { get; set; }
     }
 }

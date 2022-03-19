@@ -1,5 +1,4 @@
 using asu_management.mvc.Data;
-using asu_management.mvc.Models;
 using asu_management.mvc.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -7,43 +6,77 @@ using Serilog;
 
 namespace asu_management.mvc.Domain
 {
-    public class ItemRepository : IRepository<ItemModel>
+    public class ItemRepository : IItemRepository
     {
         private readonly ManagementDbContext _context;
-        public static SelectList ProvidersList;
         public ItemRepository(ManagementDbContext context)
         {
             _context = context;
         }
 
-        public Task<bool> CreateAsync(ItemModel model)
+        public async Task<bool> CreateItemAsync(ItemViewModel model)
+        {
+            var order = await _context.Orders
+                .Include(i => i.Items)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(o => o.Id == model.OrderId);
+                
+            var newItem = Mapper.MapModelToItem(model);
+            
+
+            if (newItem == null || order == null)
+            {
+                return false;
+            }
+
+            order.Items.Add(newItem);
+
+            _context.Orders.Update(order);
+
+
+            int result = _context.SaveChanges();
+            
+            await _context.DisposeAsync();
+
+            return (result > 0) ? true : false;
+        }
+
+        public Task<bool> DeleteItemAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ItemModel> GetByIdAsync(int id)
+        public Task<ItemViewModel[]> GetAllItemsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<ItemModel[]> GetAllAsync()
+        public async Task<ItemViewModel> GetItemByIdAsync(int id)
+        {
+            var item = await _context.OrderItems
+                .Include(i => i.Order)
+                .FirstOrDefaultAsync(i => i.Id == id);
+
+            return (item == null) ? null : Mapper.MapItemToModel(item);
+        }
+        public Task<ItemViewModel[]> SortItemsAsync(DetailsOrderViewModel model)
         {
             throw new NotImplementedException();
         }
-
-        public Task<ItemModel[]> SortAsync(int id, string number, DateTime startDay, DateTime endDay)
+        public async Task<bool> UpdateItemAsync(ItemViewModel model)
         {
-            throw new NotImplementedException();
-        }
+            var item = _context.OrderItems
+                                .FirstOrDefault(i => i.Id == model.Id);
 
-        public Task<bool> UpdateAsync(ItemModel model)
-        {
-            throw new NotImplementedException();
-        }
+            item.Quantity = model.Quantity;
+            item.Name = model.Name;
+            item.Unit = model.Unit;
 
-        public Task<bool> DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
+            _context.OrderItems.Update(item);
+            int result = _context.SaveChanges();
+            await _context.DisposeAsync();
+
+            return (result > 0) ? true : false;
         }
     }
 }

@@ -1,6 +1,5 @@
 using asu_management.mvc.Data;
 using asu_management.mvc.Domain;
-using asu_management.mvc.Models;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -14,8 +13,8 @@ builder.Host.UseSerilog((ctx, lc) => lc
     );
 
 // Repositiry
-builder.Services.AddScoped<IRepository<OrderModel>, OrderRepository>();
-builder.Services.AddScoped<IRepository<ItemModel>, ItemRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
 
 builder.Services.AddControllers();
 

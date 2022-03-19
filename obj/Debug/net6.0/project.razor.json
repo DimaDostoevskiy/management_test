@@ -16298,6 +16298,16 @@
   "RootNamespace": "asu_management.mvc",
   "Documents": [
     {
+      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Order\\Index.cshtml",
+      "TargetPath": "Views\\Order\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Order\\Delete.cshtml",
+      "TargetPath": "Views\\Order\\Delete.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Shared\\Error.cshtml",
       "TargetPath": "Views\\Shared\\Error.cshtml",
       "FileKind": "mvc"
@@ -16308,18 +16318,13 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Manage\\Details.cshtml",
-      "TargetPath": "Views\\Manage\\Details.cshtml",
+      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Order\\Details.cshtml",
+      "TargetPath": "Views\\Order\\Details.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Manage\\Delete.cshtml",
-      "TargetPath": "Views\\Manage\\Delete.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Manage\\Create.cshtml",
-      "TargetPath": "Views\\Manage\\Create.cshtml",
+      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Order\\Create.cshtml",
+      "TargetPath": "Views\\Order\\Create.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -16328,8 +16333,8 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Manage\\Index.cshtml",
-      "TargetPath": "Views\\Manage\\Index.cshtml",
+      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Order\\Edit.cshtml",
+      "TargetPath": "Views\\Order\\Edit.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -16338,13 +16343,18 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Item\\CreateItem.cshtml",
+      "TargetPath": "Views\\Item\\CreateItem.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Manage\\Edit.cshtml",
-      "TargetPath": "Views\\Manage\\Edit.cshtml",
+      "FilePath": "c:\\Projects\\ACUManagement\\asu_management.mvc\\Views\\Item\\Edit.cshtml",
+      "TargetPath": "Views\\Item\\Edit.cshtml",
       "FileKind": "mvc"
     }
   ],

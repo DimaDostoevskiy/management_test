@@ -1,13 +1,13 @@
 using asu_management.mvc.Data;
-using asu_management.mvc.Models;
+using asu_management.mvc.ViewModels;
 
 namespace asu_management.mvc.Domain
 {
     public class Mapper
     {
-        internal static OrderModel MapOrderToModel(Order order)
+        internal static OrderViewModel MapOrderToModel(Order order)
         {
-            OrderModel viewModel = new OrderModel()
+            OrderViewModel viewModel = new OrderViewModel()
             {
                 Id = order.Id,
                 Number = order.Number,
@@ -16,18 +16,18 @@ namespace asu_management.mvc.Domain
                 ProviderName = order.Provider.Name
             };
             
-            List<ItemModel> list = new();
+            List<ItemViewModel> list = new();
 
             foreach (var item in order.Items)
             {
-                list.Add(MapItemToItemModel(item));
+                list.Add(MapItemToModel(item));
             }
 
             viewModel.Items = list.ToArray();
 
             return viewModel;
         }
-        internal static Order MapModelToOrder(OrderModel viewModel)
+        internal static Order MapModelToOrder(OrderViewModel viewModel)
         {
             var order = new Order()
             {
@@ -37,26 +37,26 @@ namespace asu_management.mvc.Domain
             };
             return order;
         }
-        internal static OrderItem MapItemModelToItem(ItemModel viewModel)
+        internal static OrderItem MapModelToItem(ItemViewModel viewModel)
         {
-            var OrderItem = new OrderItem()
+            var orderItem = new OrderItem()
             {
                 Name = viewModel.Name,
                 Unit = viewModel.Unit,
                 Quantity = viewModel.Quantity,
-                OrderId = viewModel.OrderId
             };
-            return OrderItem;
+            return orderItem;
         }
-        internal static ItemModel MapItemToItemModel(OrderItem item)
+        internal static ItemViewModel MapItemToModel(OrderItem item)
         {
-            var order = new ItemModel()
+            var order = new ItemViewModel()
             {
                 Id = item.Id,
                 Name = item.Name,
                 Unit = item.Unit,
                 Quantity = item.Quantity,
-                OrderId = item.OrderId
+                OrderId = item.OrderId,
+                OrderNumber = item.Order.Number
             };
             return order;
         }

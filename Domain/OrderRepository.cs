@@ -1,12 +1,12 @@
 using asu_management.mvc.Data;
-using asu_management.mvc.Models;
+using asu_management.mvc.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace asu_management.mvc.Domain
 {
-    public class OrderRepository : IRepository<OrderModel>
+    public class OrderRepository : IOrderRepository
     {
         private readonly ManagementDbContext _context;
         public static SelectList ProvidersList;
@@ -14,8 +14,7 @@ namespace asu_management.mvc.Domain
         {
             _context = context;
         }
-
-        public async Task<OrderModel> GetByIdAsync(int id)
+        public async Task<OrderViewModel> GetByIdAsync(int id)
         {
             Order order = await _context.Orders
                 .Include(i => i.Items)
@@ -25,7 +24,7 @@ namespace asu_management.mvc.Domain
 
             return (order == null) ? null : Mapper.MapOrderToModel(order);
         }
-        public async Task<OrderModel[]> GetAllAsync()
+        public async Task<OrderViewModel[]> GetAllAsync()
         {
             var orders = await _context.Orders
                 .Include(o => o.Items)
@@ -33,7 +32,7 @@ namespace asu_management.mvc.Domain
                 .AsNoTracking()
                 .ToListAsync();
 
-            List<OrderModel> result = new();
+            List<OrderViewModel> result = new();
 
             foreach (var item in orders)
             {
@@ -42,14 +41,14 @@ namespace asu_management.mvc.Domain
 
             return result.ToArray();
         }
-        public async Task<OrderModel[]> SortAsync(int providerId, string number, DateTime startDay, DateTime endDay)
+        public async Task<OrderViewModel[]> SortAsync(IndexOrderViewModel model)
         {
-            List<OrderModel> resultList = new();
+            List<OrderViewModel> resultList = new();
 
-            if (!string.IsNullOrEmpty(number))
+            if (!string.IsNullOrEmpty(model.SortNumber))
             {
                 var orders = await _context.Orders
-                    .Where(o => o.Number == number)
+                    .Where(o => o.Number == model.SortNumber)
                     .Include(i => i.Items)
                     .Include(p => p.Provider)
                     .AsNoTracking()
@@ -63,14 +62,14 @@ namespace asu_management.mvc.Domain
             }
 
             var sortOrders = await _context.Orders
-                .Where(o => o.Date >= startDay && o.Date <= endDay)
+                .Where(o => o.Date >= model.StartSortDate && o.Date <= model.EndSortDate)
                 .Include(i => i.Items)
                 .Include(p => p.Provider)
                 .AsNoTracking()
                 .ToListAsync();
 
             sortOrders = sortOrders
-                .Where(o => o.ProviderId == providerId)
+                .Where(o => o.ProviderId == model.ProviderId)
                 .ToList();
 
             foreach (var item in sortOrders)
@@ -80,10 +79,9 @@ namespace asu_management.mvc.Domain
 
             return resultList.ToArray();
         }
-        public async Task<bool> CreateAsync(OrderModel model)
+        public async Task<bool> CreateAsync(OrderViewModel model)
         {
-            Order newOrder = Mapper.MapModelToOrder(model);
-
+            var newOrder = Mapper.MapModelToOrder(model);
             _context.Orders.Add(newOrder);
             int result = _context.SaveChanges();
             await _context.DisposeAsync();
@@ -115,10 +113,9 @@ namespace asu_management.mvc.Domain
 
             return (result > 0) ? true : false;
         }
-        public async Task<bool> UpdateAsync(OrderModel model)
+        public async Task<bool> UpdateAsync(OrderViewModel model)
         {
             Order updateOrder = _context.Orders
-                            .Include(i => i.Items)
                             .Include(i => i.Provider)
                             .FirstOrDefault(i => i.Id == model.Id);
 

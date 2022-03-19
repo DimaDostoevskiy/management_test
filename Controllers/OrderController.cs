@@ -1,43 +1,40 @@
 using Microsoft.AspNetCore.Mvc;
-using asu_management.mvc.ViewModels;
 using asu_management.mvc.Domain;
-using asu_management.mvc.Models;
+using asu_management.mvc.ViewModels;
 
 namespace asu_management.mvc.Controllers
 {
     public class OrderController : Controller
     {
-        private IRepository<OrderModel> _repository;
-        public OrderController(IRepository<OrderModel> context)
+        private IOrderRepository _repository;
+        public OrderController(IOrderRepository context)
         {
             _repository = context;
         }
 
         // GET: /Order
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var model = new OrderViewModel();
+            var model = new IndexOrderViewModel();
             model.Orders = await _repository.GetAllAsync();
             return View(model);
         }
-        // POST: /Order/
+        // POST: /Index/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SortOrders(OrderViewModel model)
+        public async Task<IActionResult> Index(IndexOrderViewModel model)
         {
-            model.Orders = await _repository
-                .SortAsync(model.ProviderId, model.SortNumber, model.StartSortDate, model.EndSortDate);
-
+            model.Orders = await _repository.SortAsync(model);
             return View("Index", model);
         }
 
         // GET: Order/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            ItemViewModel ItemModel = new();
-            ItemModel.Order = await _repository.GetByIdAsync(id);
-
-            return View(ItemModel);
+            DetailsOrderViewModel model = new();
+            model.Order = await _repository.GetByIdAsync(id);
+            return View(model);
         }
         // GET: Order/Create
         public IActionResult Create()
@@ -48,7 +45,7 @@ namespace asu_management.mvc.Controllers
         // POST: /Order/Create/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(OrderModel model)
+        public async Task<IActionResult> Create(OrderViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +63,7 @@ namespace asu_management.mvc.Controllers
         // POST: Order/Edit/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(OrderModel model)
+        public async Task<IActionResult> Edit(OrderViewModel model)
         {
             if (ModelState.IsValid)
             {
