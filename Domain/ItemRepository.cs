@@ -1,6 +1,5 @@
 using asu_management.mvc.Data;
 using asu_management.mvc.ViewModels;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -19,7 +18,6 @@ namespace asu_management.mvc.Domain
             {
                 var order = await _context.Orders
                     .Include(i => i.Items)
-                    .AsNoTracking()
                     .FirstOrDefaultAsync(o => o.Id == model.OrderId);
 
                 var newItem = Mapper.MapModelToItem(model);
@@ -49,7 +47,6 @@ namespace asu_management.mvc.Domain
             try
             {
                 OrderItem deleteItem = await _context.OrderItems
-                                        .AsNoTracking()
                                         .FirstOrDefaultAsync(i => i.Id == id);
 
                 if (deleteItem == null)
@@ -99,7 +96,6 @@ namespace asu_management.mvc.Domain
             try
             {
                 var item = await _context.OrderItems
-                                    .AsNoTracking()
                                     .FirstOrDefaultAsync(i => i.Id == model.Id);
                 if (item == null)
                 {

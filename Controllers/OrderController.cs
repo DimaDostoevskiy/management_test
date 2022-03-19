@@ -12,6 +12,7 @@ namespace asu_management.mvc.Controllers
             _repository = context;
         }
 
+        #region Index
         // GET: /Order
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -28,7 +29,9 @@ namespace asu_management.mvc.Controllers
             model.Orders = await _repository.SortAsync(model);
             return View("Index", model);
         }
+        #endregion
 
+        #region Details
         // GET: Order/Details/5
         public async Task<IActionResult> Details(int id)
         {
@@ -36,6 +39,9 @@ namespace asu_management.mvc.Controllers
             model.Order = await _repository.GetByIdAsync(id);
             return View(model);
         }
+        #endregion
+
+        #region Create
         // GET: Order/Create
         public IActionResult Create()
         {
@@ -55,6 +61,9 @@ namespace asu_management.mvc.Controllers
             }
             return View(model);
         }
+        #endregion
+
+        #region Edit
         // GET: Order/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
@@ -73,7 +82,9 @@ namespace asu_management.mvc.Controllers
             }
             return View(model);
         }
+        #endregion
 
+        #region Delete
         // GET: Order/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
@@ -81,10 +92,14 @@ namespace asu_management.mvc.Controllers
             ? RedirectToAction(nameof(Index))
             : RedirectToAction(nameof(Error));
         }
+        #endregion
+
+        #region Error
         // GET: Order/Error
         public IActionResult Error()
         {
             return View();
         }
+        #endregion
     }
 }

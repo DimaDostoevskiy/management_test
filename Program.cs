@@ -9,8 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Logger
 builder.Host.UseSerilog((ctx, lc) => lc
-    .WriteTo.Console()
-    );
+                .WriteTo.Console());
 
 // Repositiry
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
