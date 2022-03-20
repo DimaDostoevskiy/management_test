@@ -1,4 +1,5 @@
 using asu_management.mvc.Data;
+using asu_management.mvc.PageModel;
 using asu_management.mvc.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -64,7 +65,7 @@ namespace asu_management.mvc.Domain
                 return null;
             }
         }
-        public async Task<OrderViewModel[]> SortAsync(IndexOrderViewModel model)
+        public async Task<OrderViewModel[]> SortAsync(IndexOrderPageModel model)
         {
             List<OrderViewModel> resultList = new();
 
@@ -197,6 +198,29 @@ namespace asu_management.mvc.Domain
             {
                 Log.Fatal($"   UpdateAsync {ex.GetType().ToString()} | {ex.Message} ");
                 return false;
+            }
+        }
+
+        public ProviderViewModel[] GetAllProvaider()
+        {
+            try
+            {
+                List<ProviderViewModel> result = new();
+
+                var providers = _context.Providers.AsNoTracking();
+
+                foreach (var item in providers)
+                {
+                    result.Add(Mapper.MapProviderToModel(item));
+                }
+
+                Log.Information($"   GetAllProvaider 0k ");
+                return result.ToArray();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal($"   GetAllProvaider {ex.GetType().ToString()} | {ex.Message} ");
+                return null;
             }
         }
     }

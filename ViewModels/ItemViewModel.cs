@@ -2,10 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace asu_management.mvc.ViewModels
 {
-    public class ItemViewModel
+    public class ItemViewModel : BaseViewModel
     {
-        public int Id { get; set; }
-        
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }

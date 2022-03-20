@@ -60,13 +60,13 @@ namespace asu_management.mvc.Data
                     context.OrderItems.AddRange(orderItems);
                     context.SaveChanges();
 
-                    Log.Information("_____SeedData.Initialize_0k");
+                    Log.Information("  SeedData.Initialize 0k");
 
                     return;
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal($"_____SeedData.Initialize_{ex.Message}");
+                    Log.Fatal($"   SeedData.Initialize {ex.Message}");
                     return;
                 }
             }

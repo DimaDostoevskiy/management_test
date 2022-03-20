@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using asu_management.mvc.Domain;
 using asu_management.mvc.ViewModels;
+using asu_management.mvc.PageModel;
 
 namespace asu_management.mvc.Controllers
 {
@@ -17,14 +18,14 @@ namespace asu_management.mvc.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var model = new IndexOrderViewModel();
+            var model = new IndexOrderPageModel();
             model.Orders = await _repository.GetAllAsync();
             return View(model);
         }
-        // POST: /Index/
+        // POST: Order/Index/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(IndexOrderViewModel model)
+        public async Task<IActionResult> Index(IndexOrderPageModel model)
         {
             model.Orders = await _repository.SortAsync(model);
             return View("Index", model);
@@ -35,7 +36,7 @@ namespace asu_management.mvc.Controllers
         // GET: Order/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            DetailsOrderViewModel model = new();
+            DetailsOrderPageModel model = new();
             model.Order = await _repository.GetByIdAsync(id);
             return View(model);
         }

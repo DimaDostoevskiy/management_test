@@ -7,12 +7,12 @@ namespace asu_management.mvc.Domain
     {
         internal static OrderViewModel MapOrderToModel(Order order)
         {
-            OrderViewModel viewModel = new OrderViewModel()
+            var model = new OrderViewModel()
             {
                 Id = order.Id,
                 Number = order.Number,
                 Date = order.Date,
-                ProviderId = order.ProviderId,
+                ProviderId = order.Provider.Id,
                 ProviderName = order.Provider.Name
             };
             
@@ -23,42 +23,51 @@ namespace asu_management.mvc.Domain
                 list.Add(MapItemToModel(item));
             }
 
-            viewModel.Items = list.ToArray();
+            model.Items = list.ToArray();
 
-            return viewModel;
+            return model;
         }
-        internal static Order MapModelToOrder(OrderViewModel viewModel)
+        internal static Order MapModelToOrder(OrderViewModel model)
         {
             var order = new Order()
             {
-                Number = viewModel.Number,
-                Date = viewModel.Date,
-                ProviderId = viewModel.ProviderId
+                Number = model.Number,
+                Date = model.Date,
+                ProviderId = model.ProviderId
             };
             return order;
         }
-        internal static OrderItem MapModelToItem(ItemViewModel viewModel)
+        internal static OrderItem MapModelToItem(ItemViewModel model)
         {
-            var orderItem = new OrderItem()
+            var item = new OrderItem()
             {
-                Name = viewModel.Name,
-                Unit = viewModel.Unit,
-                Quantity = viewModel.Quantity,
+                Name = model.Name,
+                Unit = model.Unit,
+                Quantity = model.Quantity,
             };
-            return orderItem;
+            return item;
         }
         internal static ItemViewModel MapItemToModel(OrderItem item)
         {
-            var order = new ItemViewModel()
+            var model = new ItemViewModel()
             {
                 Id = item.Id,
                 Name = item.Name,
                 Unit = item.Unit,
                 Quantity = item.Quantity,
-                OrderId = item.OrderId,
+                OrderId = item.Order.Id,
                 OrderNumber = item.Order.Number
             };
-            return order;
+            return model;
+        }
+        internal static ProviderViewModel MapProviderToModel(Provider provider)
+        {
+            var model = new ProviderViewModel()
+            {
+                Id = provider.Id,
+                Name = provider.Name
+            };
+            return model;
         }
     }
 }

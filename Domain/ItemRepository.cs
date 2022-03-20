@@ -1,4 +1,5 @@
 using asu_management.mvc.Data;
+using asu_management.mvc.PageModel;
 using asu_management.mvc.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -87,7 +88,7 @@ namespace asu_management.mvc.Domain
                 return null;
             }
         }
-        public Task<ItemViewModel[]> SortItemsAsync(DetailsOrderViewModel model)
+        public Task<ItemViewModel[]> SortItemsAsync(DetailsOrderPageModel model)
         {
             throw new NotImplementedException();
         }
@@ -121,4 +122,3 @@ namespace asu_management.mvc.Domain
         }
     }
 }
-

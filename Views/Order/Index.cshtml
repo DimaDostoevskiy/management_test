@@ -1,4 +1,4 @@
-@model IndexOrderViewModel
+@model IndexOrderPageModel
 
 @{
   ViewData["Title"] = "Index";
@@ -10,6 +10,13 @@
 
 <form asp-action="Index" method="post">
   <div class="row">
+
+    <div class="col input-group">
+      <div class="input-group-text">
+        <input class="form-check-input" type="checkbox" value="">
+      </div>
+      <input asp-for="SortNumber" class="form-control" placeholder="order number" />
+    </div>
 
     <div class="col">
       <input asp-for="SortNumber" class="form-control" placeholder="order number" />

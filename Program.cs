@@ -32,6 +32,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
 
+// Seed Data
 SeedData.Initialize(app);
 
 if (app.Environment.IsDevelopment())

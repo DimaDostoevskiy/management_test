@@ -1,10 +1,12 @@
 using asu_management.mvc.Domain;
+using asu_management.mvc.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace asu_management.mvc.ViewModels
+namespace asu_management.mvc.PageModel
 {
-    public class IndexOrderViewModel
+    public class IndexOrderPageModel
     {
+        public bool IsSortNumber { get; set; }
         public OrderViewModel[] Orders { get; set; }
         public string SortNumber { get; set; }
         public int ProviderId { get; set; }

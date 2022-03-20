@@ -1,6 +1,8 @@
-namespace asu_management.mvc.ViewModels
+using asu_management.mvc.ViewModels;
+
+namespace asu_management.mvc.PageModel
 {
-    public class DetailsOrderViewModel
+    public class DetailsOrderPageModel
     {
         public OrderViewModel Order { get; set; }
         public string SortName { get; set; }

@@ -1,4 +1,4 @@
-@model DetailsOrderViewModel
+@model DetailsOrderPageModel
 
 @{
   ViewData["Title"] = "Order Details";
@@ -11,7 +11,10 @@
   <h4>Date: @Model.Order.Date </h4>
 </div>
 <div class="row">
-  <h4>Provider: @Model.Order.ProviderName) </h4>
+  <h4>Provider: @Model.Order.ProviderName </h4>
+</div>
+<div class="row">
+  <h4>Provider: @Model.Order.Id </h4>
 </div>
 
 <div class="row">

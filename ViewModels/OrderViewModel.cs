@@ -4,11 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace asu_management.mvc.ViewModels
 {
-    public class OrderViewModel
+    public class OrderViewModel : BaseViewModel
     {
-        public int Id { get; set; }
-
-        [Required]
         public string Number { get; set; }
         public DateTime Date { get; set; } = DateTime.Now.Date;
         public int ProviderId { get; set; }
