@@ -11,6 +11,6 @@ namespace asu_management.mvc.ViewModels
         public int ProviderId { get; set; }
         public string ProviderName { get; set; }
         public ItemViewModel[] Items { get; set; }
-        public SelectList Providers { get; set; } = OrderRepository.ProvidersList;
+        public SelectList Providers { get; set; }
     }
 }

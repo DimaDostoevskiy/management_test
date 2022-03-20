@@ -22,7 +22,7 @@ namespace asu_management.mvc.Data
 
                     if (context.Providers.Any())
                     {
-                        OrderRepository.ProvidersList = new SelectList(context.Providers.ToList(), "Id", "Name");
+                        
 
                         Log.Information("_____Datebase is not empty");
                         

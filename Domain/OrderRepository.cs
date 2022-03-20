@@ -1,3 +1,4 @@
+using System.Text;
 using asu_management.mvc.Data;
 using asu_management.mvc.PageModel;
 using asu_management.mvc.ViewModels;
@@ -65,45 +66,63 @@ namespace asu_management.mvc.Domain
                 return null;
             }
         }
-        public async Task<OrderViewModel[]> SortAsync(IndexOrderPageModel model)
+        public async Task<OrderViewModel[]> SortOrderAsync(IndexOrderPageModel model)
         {
             List<OrderViewModel> resultList = new();
 
+            StringBuilder searchString = new();
+
+            searchString.Append("SELECT * FROM [managementdb].[dbo].[Orders]");
+            bool isAND = false;
+
+            if (model.IsSortNumber && !string.IsNullOrWhiteSpace(model.SortNumber))
+            {
+                searchString.Append((isAND) ? " AND" : " WHERE");
+                searchString.Append(String.Format(" Number = {0}",
+                model.SortNumber));
+                isAND = true;
+            }
+            if (model.IsSortDay)
+            {
+                searchString.Append((isAND) ? " AND" : " WHERE");
+                searchString.Append(String.Format(" ([Date] >= '{0}') AND ([Date] <= '{1}')",
+                model.StartSortDate.ToString(),
+                model.EndSortDate.ToString()));
+                isAND = true;
+            }
+            if (model.IsSortProvider)
+            {
+                searchString.Append((isAND) ? " AND" : " WHERE");
+                searchString.Append(String.Format(" [ProviderId] = {0}",
+                model.ProviderId));
+                isAND = true;
+            }
+
+            Log.Warning(searchString.ToString());
+
             try
             {
-                if (!string.IsNullOrEmpty(model.SortNumber))
-                {
-                    var orders = await _context.Orders
-                        .Where(o => o.Number == model.SortNumber)
-                        .Include(i => i.Items)
-                        .Include(p => p.Provider)
-                        .AsNoTracking()
-                        .ToListAsync();
-
-                    foreach (var item in orders)
-                    {
-                        resultList.Add(Mapper.MapOrderToModel(item));
-                    }
-                    return resultList.ToArray();
-                }
-
-                var sortOrders = await _context.Orders
-                    .Where(o => o.Date >= model.StartSortDate && o.Date <= model.EndSortDate)
+                var orders = await _context.Orders
+                    .FromSqlRaw(searchString.ToString())
                     .Include(i => i.Items)
                     .Include(p => p.Provider)
                     .AsNoTracking()
                     .ToListAsync();
 
-                sortOrders = sortOrders
-                    .Where(o => o.ProviderId == model.ProviderId)
-                    .ToList();
-
-                foreach (var item in sortOrders)
+                foreach (var item in orders)
                 {
                     resultList.Add(Mapper.MapOrderToModel(item));
                 }
 
+                // await _context.Orders
+                //                 .Where(order => shouldBeFiltered && order.Field == valueToFilterBy)
+                //                 .Where(order => shouldBeFiltered2 && order.Field2 < valueToFilterBy2)
+                //                 .AsNoTracking()
+                //                 .ToListAsync();
+
+
                 Log.Information($"   SortAsync 0k ");
+
                 return resultList.ToArray();
             }
             catch (Exception ex)
@@ -200,26 +219,17 @@ namespace asu_management.mvc.Domain
                 return false;
             }
         }
-
-        public ProviderViewModel[] GetAllProvaider()
+        public async Task<SelectList> GetListProvaidersAsync()
         {
             try
             {
-                List<ProviderViewModel> result = new();
-
-                var providers = _context.Providers.AsNoTracking();
-
-                foreach (var item in providers)
-                {
-                    result.Add(Mapper.MapProviderToModel(item));
-                }
-
-                Log.Information($"   GetAllProvaider 0k ");
-                return result.ToArray();
+                var selectList = new SelectList(await _context.Providers.ToListAsync(), "Id", "Name");
+                Log.Information($"   GetListProvaidersAsync 0k ");
+                return selectList;
             }
             catch (Exception ex)
             {
-                Log.Fatal($"   GetAllProvaider {ex.GetType().ToString()} | {ex.Message} ");
+                Log.Fatal($"   GetListProvaidersAsync {ex.GetType().ToString()} | {ex.Message} ");
                 return null;
             }
         }

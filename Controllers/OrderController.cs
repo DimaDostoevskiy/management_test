@@ -20,6 +20,7 @@ namespace asu_management.mvc.Controllers
         {
             var model = new IndexOrderPageModel();
             model.Orders = await _repository.GetAllAsync();
+            model.Providers = await _repository.GetListProvaidersAsync();
             return View(model);
         }
         // POST: Order/Index/
@@ -27,7 +28,8 @@ namespace asu_management.mvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(IndexOrderPageModel model)
         {
-            model.Orders = await _repository.SortAsync(model);
+            model.Orders = await _repository.SortOrderAsync(model);
+            model.Providers = await _repository.GetListProvaidersAsync();
             return View("Index", model);
         }
         #endregion
@@ -44,9 +46,11 @@ namespace asu_management.mvc.Controllers
 
         #region Create
         // GET: Order/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View(new OrderViewModel());
+            OrderViewModel model = new();
+            model.Providers = await _repository.GetListProvaidersAsync();
+            return View(model);
         }
 
         // POST: /Order/Create/
