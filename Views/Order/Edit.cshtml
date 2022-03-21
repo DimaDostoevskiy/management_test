@@ -1,7 +1,7 @@
-@model OrderViewModel
+@model OrderEditPageModel
 
 @{
-	ViewData["Title"] = "Edit";
+	ViewData["Title"] = "Order Edit";
 }
 
 <h1>Edit Order</h1>
@@ -12,21 +12,21 @@
 		<form asp-action="Edit">
 
 			<div class="form-group">
-				<label asp-for="Number" class="control-label">Provider</label>
-				<select asp-for="ProviderId" value="@Model.ProviderId" class="form-select" asp-items="@Model.Providers">
+				<label asp-for="Order.ProviderId" class="control-label">Provider</label>
+				<select asp-for="Order.ProviderId" value="@Model.Order.ProviderId" class="form-select" asp-items="@Model.Providers">
 				</select>
 			</div>
 
 			<div class="form-group">
-				<label asp-for="Number" class="control-label">Number</label>
-				<input asp-for="Number" class="form-control" />
-				<span asp-validation-for="Number" class="text-danger"></span>
+				<label asp-for="Order.Number" class="control-label">Number</label>
+				<input asp-for="Order.Number" class="form-control" value="@Model.Order.Number" />
+				<span asp-validation-for="Order.Number" class="text-danger"></span>
 			</div>
 
 			<div class="form-group">
-				<label asp-for="Date" class="control-label">Date</label>
-				<input asp-for="Date" class="form-control" />
-				<span asp-validation-for="Date" class="text-danger"></span>
+				<label asp-for="Order.Date" class="control-label">Date</label>
+				<input asp-for="Order.Date" class="form-control" value="@Model.Order.Date"/>
+				<span asp-validation-for="Order.Date" class="text-danger"></span>
 			</div>
 
 			<div class="form-group">

@@ -12,8 +12,11 @@ builder.Host.UseSerilog((ctx, lc) => lc
                 .WriteTo.Console());
 
 // Repositiry
-builder.Services.AddScoped<IOrderRepository, OrderRepository>();
-builder.Services.AddScoped<IItemRepository, ItemRepository>();
+builder.Services.AddScoped<OrderRepository>(container => 
+            new OrderRepository(container.GetService<ManagementDbContext>()));
+
+builder.Services.AddScoped<ItemRepository>(container => 
+            new ItemRepository(container.GetService<ManagementDbContext>()));
 
 builder.Services.AddControllers();
 
@@ -61,3 +64,22 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+//Mapper
+// InitializeMapper(builder.Services);
+
+// void InitializeMapper(IServiceCollection services)
+// {
+//     var provider = new MapperConfigurationExpression();
+
+//     provider.CreateMap<Order,OrderViewModel>();
+//     provider.CreateMap<OrderViewModel,Order>();
+
+//     provider.CreateMap<ItemViewModel,OrderItem>();
+//     provider.CreateMap<OrderItem,ItemViewModel>();
+
+//     var configure = new MapperConfiguration(provider);
+//     var mapper = new AutoMapper.Mapper(configure);
+
+//     services.AddScoped<IMapper>(x => mapper);
+// }

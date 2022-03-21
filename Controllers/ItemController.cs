@@ -7,10 +7,10 @@ namespace asu_management.mvc.Controllers
 {
     public class ItemController : Controller
     {
-        private IItemRepository _repository;
-        public ItemController(IItemRepository context)
+        private ItemRepository _repository;
+        public ItemController(ItemRepository repository)
         {
-            _repository = context;
+            _repository = repository;
         }
         #region Create
         // GET: Item/CreateItem/5
@@ -25,8 +25,7 @@ namespace asu_management.mvc.Controllers
         // POST: Item/CreateItem/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateItem(
-            [Bind("Name,Quantity,Unit,OrderId")] ItemViewModel model)
+        public async Task<IActionResult> CreateItem(ItemViewModel model) //TODO: Add Bind
         {
             if (ModelState.IsValid)
             {
@@ -34,6 +33,7 @@ namespace asu_management.mvc.Controllers
                 ? Redirect($@"/Order/Details/{model.OrderId}")
                 : Redirect(@"/Order/Error");
             }
+
             Log.Warning(@" NO VALID /Item/CreateItem");
 
             return View(model);
@@ -51,8 +51,7 @@ namespace asu_management.mvc.Controllers
         // POST: Item/Edit/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditItem(
-            [Bind("Id,Name,Quantity,Unit,OrderId")] ItemViewModel model)
+        public async Task<IActionResult> EditItem(ItemViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +60,7 @@ namespace asu_management.mvc.Controllers
                 : Redirect(@"/Order/Error");
             }
             Log.Warning(@" NO VALID /Item/EditItem");
+            
             return View(model);
         }
         #endregion
@@ -68,10 +68,9 @@ namespace asu_management.mvc.Controllers
         #region Delete
         // GET: Item/Deletetem/5
         [HttpGet]
-        public async Task<IActionResult> DeleteItem(
-            [Bind("Id,OrderId")] ItemViewModel model)
+        public async Task<IActionResult> DeleteItem(ItemViewModel model)
         {
-            return await _repository.DeleteItemAsync(model.Id)
+            return await _repository.RemoveAsync(model.Id)
             ? Redirect($@"/Order/Index")
             : Redirect(@"/Order/Error");
         }
