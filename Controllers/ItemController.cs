@@ -8,6 +8,7 @@ namespace asu_management.mvc.Controllers
     public class ItemController : Controller
     {
         private ItemRepository _repository;
+        private const string errorPath = @"/Order/Error";
         public ItemController(ItemRepository repository)
         {
             _repository = repository;
@@ -17,7 +18,7 @@ namespace asu_management.mvc.Controllers
         [HttpGet]
         public IActionResult CreateItem(int id)
         {
-            var model = new ItemViewModel();
+            ItemViewModel model = new();
             model.OrderId = id;
             return View(model);
         }
@@ -25,7 +26,7 @@ namespace asu_management.mvc.Controllers
         // POST: Item/CreateItem/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateItem(ItemViewModel model) //TODO: Add Bind
+        public async Task<IActionResult> CreateItem(ItemViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -34,7 +35,7 @@ namespace asu_management.mvc.Controllers
                 : Redirect(@"/Order/Error");
             }
 
-            Log.Warning(@" NO VALID /Item/CreateItem");
+            Log.Warning("   NO VALID /Item/CreateItem");
 
             return View(model);
         }
@@ -46,21 +47,22 @@ namespace asu_management.mvc.Controllers
         public async Task<IActionResult> EditItem(int id)
         {
             ItemViewModel model = await _repository.GetItemByIdAsync(id);
-            return View(model);
+
+            return (model == null) 
+            ? Redirect(errorPath)
+            : View(model);
         }
-        // POST: Item/Edit/
+        // POST: Item/EditItem/
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditItem(ItemViewModel model)
         {
             if (ModelState.IsValid)
             {
-                return await _repository.UpdateItemAsync(model)
+                return await _repository.EditItemAsync(model)
                 ? Redirect($@"/Order/Details/{model.OrderId}")
-                : Redirect(@"/Order/Error");
+                : Redirect(errorPath);
             }
-            Log.Warning(@" NO VALID /Item/EditItem");
-            
             return View(model);
         }
         #endregion
@@ -68,11 +70,11 @@ namespace asu_management.mvc.Controllers
         #region Delete
         // GET: Item/Deletetem/5
         [HttpGet]
-        public async Task<IActionResult> DeleteItem(ItemViewModel model)
+        public async Task<IActionResult> DeleteItem(int id)
         {
-            return await _repository.RemoveAsync(model.Id)
+            return await _repository.DeleteItemAsync(id)
             ? Redirect($@"/Order/Index")
-            : Redirect(@"/Order/Error");
+            : Redirect(errorPath);
         }
         #endregion
     }

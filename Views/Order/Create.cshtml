@@ -1,4 +1,4 @@
-@model OrderViewModel
+@model OrderCreatePageModel
 
 @{
     ViewData["Title"] = "Create Order";
@@ -9,22 +9,22 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post">
 
             <div class="form-group">
-                <select asp-for="ProviderId" class="form-select" asp-items="@Model.Providers"></select>
+                <select asp-for="Order.ProviderId" class="form-select" asp-items="@Model.Providers"></select>
             </div>
 
             <div class="form-group">
-                <label asp-for="Number" class="control-label">Number</label>
-                <input asp-for="Number" class="form-control" />
-                <span asp-validation-for="Number" class="text-danger"></span>
+                <label asp-for="Order.Number" class="control-label">Number</label>
+                <input asp-for="Order.Number" class="form-control" />
+                <span asp-validation-for="Order.Number" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Date" class="control-label">Date</label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+                <label asp-for="Order.Date" class="control-label">Date</label>
+                <input asp-for="Order.Date" class="form-control" />
+                <span asp-validation-for="Order.Date" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -36,7 +36,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
 </div>
 
 @section Scripts {

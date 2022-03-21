@@ -64,19 +64,11 @@ namespace asu_management.mvc.Domain
                 return false;
             }
         }
-        public async Task<bool> RemoveAsync(int id)
+        public async Task<bool> RemoveAsync(T entity)
         {
             try
             {
-                var removeEntity = await GetByIdAsync(id);
-
-                if (removeEntity == null)
-                {
-                    return false;
-                }
-
-                _dbSet.Remove(removeEntity);
-
+                _dbSet.Remove(entity);
                 return (await _context.SaveChangesAsync() > 0) ? true : false;
             }
             catch (Exception ex)

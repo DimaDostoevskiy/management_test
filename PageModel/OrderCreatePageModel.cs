@@ -1,11 +1,11 @@
 using asu_management.mvc.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace asu_management.mvc.PageModel
 {
-    public class DetailsOrderPageModel
+    public class OrderCreatePageModel
     {
         public OrderViewModel Order { get; set; }
-        public string SortName { get; set; }
-        public string SortUnit { get; set; }
+        public SelectList Providers { get; set; }
     }
 }

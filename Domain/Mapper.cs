@@ -8,6 +8,11 @@ namespace asu_management.mvc.Domain
     {
         internal static OrderViewModel MapOrderToModel(Order order)
         {
+            if(order == null)
+            {
+                return null;
+            }
+            
             var model = new OrderViewModel()
             {
                 Id = order.Id,
@@ -16,6 +21,11 @@ namespace asu_management.mvc.Domain
                 ProviderId = order.Provider.Id,
                 ProviderName = order.Provider.Name
             };
+
+            if(order.Items == null)
+            {
+                return model;
+            }
 
             List<ItemViewModel> list = new();
 
@@ -28,45 +38,30 @@ namespace asu_management.mvc.Domain
 
             return model;
         }
-        internal static async Task<Order> MapModelToOrderAsync(OrderViewModel model, ManagementDbContext context)
+        internal static Order MapModelToOrderAsync(OrderViewModel model)
         {
-            var provider = await context.Providers
-                .FirstOrDefaultAsync(x => x.Id == model.ProviderId);
-
-            if (provider == null)
-            {
-                return null;
-            }
-
             var order = new Order()
             {
                 Number = model.Number,
                 Date = model.Date,
-                Provider = provider
             };
-
             return order;
         }
-        internal static async Task<OrderItem> MapModelToItemAsync(
-                ItemViewModel model, ManagementDbContext context)
+        internal static OrderItem MapModelToItemAsync(ItemViewModel model)
         {
-            var order = await context.Orders
-                                        .FirstOrDefaultAsync(x => x.Id == model.OrderId);
-            if(order == null)
-            {
-                return null;
-            }
-            var item = new OrderItem()
+            return (model == null) ? null : new OrderItem()
             {
                 Name = model.Name,
                 Unit = model.Unit,
                 Quantity = model.Quantity,
-                Order = order
             };
-            return item;
         }
         internal static ItemViewModel MapItemToModel(OrderItem item)
         {
+            if(item == null)
+            {
+                return null;
+            }
             var model = new ItemViewModel()
             {
                 Id = item.Id,

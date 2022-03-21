@@ -2,12 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using asu_management.mvc.Domain;
 using asu_management.mvc.ViewModels;
 using asu_management.mvc.PageModel;
-using AutoMapper;
 
 namespace asu_management.mvc.Controllers
 {
     public class OrderController : Controller
     {
+        private const string errorPath = @"/Order/Error";
         private readonly OrderRepository _repository;
         public OrderController(OrderRepository repository)
         {
@@ -19,19 +19,19 @@ namespace asu_management.mvc.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var model = new IndexOrderPageModel();
+            var model = new IndexPageModel();
             model.Orders = await _repository.GetAllOrdersAsync();
-            model.Providers = await _repository.GetListProvaidersAsync();
+            model.SelectProviders = await _repository.GetListProvaidersAsync();
             return View(model);
         }
         // POST: Order/Index/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(IndexOrderPageModel model)
+        public async Task<IActionResult> Index(IndexPageModel model)
         {
             model.Orders = await _repository.SortOrderAsync(model);
-            model.Providers = await _repository.GetListProvaidersAsync();
-            return View("Index", model);
+            model.SelectProviders = await _repository.GetListProvaidersAsync();
+            return View(model);
         }
         #endregion
 
@@ -39,9 +39,11 @@ namespace asu_management.mvc.Controllers
         // GET: Order/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            DetailsOrderPageModel model = new();
+            OrderDetailsViewModel model = new();
             model.Order = await _repository.GetOrderByIdAsync(id);
-            return View(model);
+            return (model.Order == null)
+            ? Redirect(errorPath)
+            : View(model);
         }
         #endregion
 
@@ -49,19 +51,22 @@ namespace asu_management.mvc.Controllers
         // GET: Order/Create
         public async Task<IActionResult> Create()
         {
-            OrderViewModel model = new();
+            OrderCreatePageModel model = new();
             model.Providers = await _repository.GetListProvaidersAsync();
-            return View(model);
+
+            return (model.Providers == null)
+            ? Redirect(errorPath)
+            : View(model);
         }
 
         // POST: /Order/Create/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(OrderViewModel model)
+        public async Task<IActionResult> Create(OrderCreatePageModel model)
         {
             if (ModelState.IsValid)
             {
-                return await _repository.CreateOrderAsync(model)
+                return await _repository.CreateOrderAsync(model.Order)
                 ? RedirectToAction(nameof(Index))
                 : RedirectToAction(nameof(Error));
             }
@@ -74,7 +79,7 @@ namespace asu_management.mvc.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             OrderEditPageModel pageModel = new();
-            pageModel.Providers = await _repository.GetListProvaidersAsync();
+            pageModel.SelectProviders = await _repository.GetListProvaidersAsync();
             pageModel.Order = await _repository.GetOrderByIdAsync(id);
             return View(pageModel);
         }
@@ -85,7 +90,7 @@ namespace asu_management.mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                return await _repository.OrderUpdateAsync(model)
+                return await _repository.EditOrderAsync(model.Order)
                 ? RedirectToAction(nameof(Index))
                 : RedirectToAction(nameof(Error));
             }
@@ -97,7 +102,7 @@ namespace asu_management.mvc.Controllers
         // GET: Order/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            return await _repository.RemoveAsync(id)
+            return await _repository.DeleteOrderAsync(id)
             ? RedirectToAction(nameof(Index))
             : RedirectToAction(nameof(Error));
         }

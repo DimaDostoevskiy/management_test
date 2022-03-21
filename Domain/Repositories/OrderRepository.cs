@@ -9,15 +9,28 @@ namespace asu_management.mvc.Domain
 {
     public class OrderRepository : BaseRepository<Order>
     {
-        public OrderRepository(ManagementDbContext context)
-            : base(context)
+        public OrderRepository(ManagementDbContext context) : base(context)
         {
         }
+        public async Task<bool> CreateOrderAsync(OrderViewModel model)
+        {
+            Order newOrder = Mapper.MapModelToOrderAsync(model);
+
+            Provider provider = await _context.Providers
+                            .FirstOrDefaultAsync(x => x.Id == model.ProviderId);
+
+            newOrder.Provider = provider;
+
+            return await base.CreateAsync(newOrder);
+        }
+
         public async Task<OrderViewModel> GetOrderByIdAsync(int id)
         {
-            OrderViewModel model = Mapper.MapOrderToModel(await base.GetByIdAsync(id));
+            Order order = await base.GetByIdAsync(id);
+            OrderViewModel model = Mapper.MapOrderToModel(order);
             return model;
         }
+
         public async Task<OrderViewModel[]> GetAllOrdersAsync()
         {
             var orders = await base.GetAllAsync();
@@ -36,7 +49,8 @@ namespace asu_management.mvc.Domain
 
             return resultList.ToArray();
         }
-        public async Task<OrderViewModel[]> SortOrderAsync(IndexOrderPageModel model)
+
+        public async Task<OrderViewModel[]> SortOrderAsync(IndexPageModel model)
         {
             var filterOrders = await base.GetAllAsync();
 
@@ -64,6 +78,7 @@ namespace asu_management.mvc.Domain
 
             foreach (var item in filterOrders)
             {
+
                 resultList.Add(Mapper.MapOrderToModel(item));
             }
 
@@ -71,33 +86,66 @@ namespace asu_management.mvc.Domain
 
             return resultList.ToArray();
         }
-        public async Task<bool> CreateOrderAsync(OrderViewModel model)
+
+        public async Task<bool> EditOrderAsync(OrderViewModel model)
         {
-            var order = await Mapper.MapModelToOrderAsync(model, base._context);
-            return await base.CreateAsync(order);
+            try
+            {
+                Provider provider = await _context.Providers
+                                .FirstOrDefaultAsync(x => x.Id == model.ProviderId);
+
+                Order updateOrder = await base.GetByIdAsync(model.Id);
+
+                if(provider == null || updateOrder == null)
+                {
+                    return false;
+                }
+
+                updateOrder.Provider = provider;
+                updateOrder.Date = model.Date;
+                updateOrder.Number = model.Number;
+
+                return await base.UpdateAsync(updateOrder);
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal($"    EditOrderAsync {ex.GetType().ToString()} | {ex.Message}");
+                return false;
+            }
         }
-        public async Task<bool> DeleteOrderAsync(int id)
-        {
-            return await base.RemoveAsync(id);
-        }
-        public async Task<bool> OrderUpdateAsync(OrderEditPageModel model)
-        {
-            Order order = await Mapper.MapModelToOrderAsync(model.Order, base._context);
-            return await base.UpdateAsync(order);
-        }
+
         public async Task<SelectList> GetListProvaidersAsync()
         {
             try
             {
-                var selectList = new SelectList(await _context.Providers.ToListAsync(), "Id", "Name");
-                Log.Information($"   GetListProvaidersAsync 0k ");
-                return selectList;
+                var providersList = await _context.Providers.ToListAsync();
+                return new SelectList(providersList, "Id", "Name");
             }
             catch (Exception ex)
             {
                 Log.Fatal($"   GetListProvaidersAsync {ex.GetType().ToString()} | {ex.Message} ");
                 return null;
             }
+        }
+
+        public async Task<bool> DeleteOrderAsync(int id)
+        {
+            Order deleteOrder = await base.GetByIdAsync(id);
+
+            try
+            {
+                foreach (var item in deleteOrder.Items)
+                {
+                    _context.Remove(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal($"   GetListProvaidersAsync {ex.GetType().ToString()} | {ex.Message} ");
+                return false;
+            }
+
+            return await base.RemoveAsync(deleteOrder);
         }
     }
 }

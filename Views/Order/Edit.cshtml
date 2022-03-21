@@ -9,11 +9,15 @@
 
 <div class="row">
 	<div class="col-md-4">
-		<form asp-action="Edit">
+		<form asp-action="Edit" method="post">
+
+			<input type="hidden" asp-for="Order.Id" value="@Model.Order.Id" />
+			<input type="hidden" asp-for="PreviuProviderId" value="@Model.Order.ProviderId" />
 
 			<div class="form-group">
 				<label asp-for="Order.ProviderId" class="control-label">Provider</label>
-				<select asp-for="Order.ProviderId" value="@Model.Order.ProviderId" class="form-select" asp-items="@Model.Providers">
+				<select asp-for="Order.ProviderId" value="@Model.Order.ProviderId" class="form-select"
+					asp-items="@Model.SelectProviders">
 				</select>
 			</div>
 
@@ -25,7 +29,7 @@
 
 			<div class="form-group">
 				<label asp-for="Order.Date" class="control-label">Date</label>
-				<input asp-for="Order.Date" class="form-control" value="@Model.Order.Date"/>
+				<input asp-for="Order.Date" class="form-control" />
 				<span asp-validation-for="Order.Date" class="text-danger"></span>
 			</div>
 
@@ -38,7 +42,7 @@
 </div>
 
 <div>
-	<a asp-action="Index">Back to List</a>
+	<a asp-action="Details" asp-route-id="@Model.Order.Id" class="btn btn-primary">Back to List</a>
 </div>
 
 @section Scripts {

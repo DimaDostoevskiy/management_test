@@ -1,4 +1,4 @@
-@model IndexOrderPageModel
+@model IndexPageModel
 
 @{
   ViewData["Title"] = "Index";
@@ -33,7 +33,7 @@
           <input asp-for="IsSortProvider" class="form-check-input mt-0" type="checkbox">
         </div>
         <span class="input-group-text">Provider</span>
-        <select asp-for="ProviderId" class="form-select" asp-items="@Model.Providers"></select>
+        <select asp-for="ProviderId" class="form-select" asp-items="@Model.SelectProviders"></select>
       </div>
     </div>
 
@@ -74,7 +74,6 @@ else
     </thead>
 
     <tbody>
-
       @foreach (var item in Model.Orders)
       {
         <tr>
