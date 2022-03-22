@@ -87,6 +87,44 @@ namespace asu_management.mvc.Domain
             return resultList.ToArray();
         }
 
+        public ItemViewModel[] SortItems(ItemViewModel[] inItems,
+                                                string sortName,
+                                                string sortUnit,
+                                                decimal startSortQuantity,
+                                                decimal endSortQuantity)
+        {
+            var resultList = inItems.ToList();
+
+            if (sortName != "All")
+            {
+                resultList = resultList
+                            .Where(x => x.Name == sortName)
+                            .ToList();
+            }
+            if (sortUnit != "All")
+            {
+                resultList = resultList
+                            .Where(x => x.Unit == sortUnit)
+                            .ToList();
+            }
+
+            if (startSortQuantity > 0)
+            {
+                resultList = resultList
+                            .Where(x => x.Quantity > startSortQuantity)
+                            .ToList();
+            }
+
+            if (endSortQuantity > 0)
+            {
+                resultList = resultList
+                            .Where(x => x.Quantity < endSortQuantity)
+                            .ToList();
+            }
+
+            return resultList.ToArray();
+        }
+
         public async Task<bool> EditOrderAsync(OrderViewModel model)
         {
             try
@@ -96,7 +134,7 @@ namespace asu_management.mvc.Domain
 
                 Order updateOrder = await base.GetByIdAsync(model.Id);
 
-                if(provider == null || updateOrder == null)
+                if (provider == null || updateOrder == null)
                 {
                     return false;
                 }
@@ -120,6 +158,34 @@ namespace asu_management.mvc.Domain
             {
                 var providersList = await _context.Providers.ToListAsync();
                 return new SelectList(providersList, "Id", "Name");
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal($"   GetListProvaidersAsync {ex.GetType().ToString()} | {ex.Message} ");
+                return null;
+            }
+        }
+
+        public async Task<List<SelectList>> GetSelectListsAsync(int id)
+        {
+            try
+            {
+                Order order = await base.GetByIdAsync(id);
+
+                if (order == null) { return null; };
+
+                order.Items.Add(new OrderItem()
+                {
+                    Unit = "All",
+                    Name = "All"
+                });
+
+                var unitSelect = new SelectList(order.Items.ToList(), "Unit", "Unit");
+                var nameSelect = new SelectList(order.Items.ToList(), "Name", "Name");
+
+                // resultList.Append(new SelectListItem("All", "Unit")); // ?
+
+                return new List<SelectList>() { unitSelect, nameSelect };
             }
             catch (Exception ex)
             {

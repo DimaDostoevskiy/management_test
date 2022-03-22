@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using asu_management.mvc.Domain;
-using asu_management.mvc.ViewModels;
 using asu_management.mvc.PageModel;
 
 namespace asu_management.mvc.Controllers
@@ -37,10 +36,35 @@ namespace asu_management.mvc.Controllers
 
         #region Details
         // GET: Order/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            OrderDetailsViewModel model = new();
+            OrderDetailsPageModel model = new();
+
             model.Order = await _repository.GetOrderByIdAsync(id);
+
+            var select = await _repository.GetSelectListsAsync(model.Order.Id);
+            
+            model.SortNames = select[1];
+            model.SortUnits = select[0]; // Возможно, это не лучшее решение, но добавить new SelectListItem никак не выходит =(
+
+            return (model.Order == null)
+            ? Redirect(errorPath)
+            : View(model);
+        }
+        // GET: Order/Details/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Details(OrderDetailsPageModel model) // Bind property?
+        {
+            model.Order = await _repository.GetOrderByIdAsync(model.Order.Id);
+            var select = await _repository.GetSelectListsAsync(model.Order.Id);
+            model.SortNames = select[1];
+            model.SortUnits = select[0];
+
+            model.Order.Items = _repository.SortItems
+                (model.Order.Items, model.SortName, model.SortUnit, model.StartSortQuantity, model.EndSortQuantity);
+
             return (model.Order == null)
             ? Redirect(errorPath)
             : View(model);

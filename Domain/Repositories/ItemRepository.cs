@@ -6,7 +6,7 @@ using Serilog;
 
 namespace asu_management.mvc.Domain
 {
-    public class ItemRepository : BaseRepository<OrderItem>
+    public class ItemRepository : BaseRepository<OrderItem>  // ItemService?
     {
         public ItemRepository(ManagementDbContext context)
             : base(context)
@@ -33,31 +33,15 @@ namespace asu_management.mvc.Domain
             return model;
         }
 
-        public Task<ItemViewModel[]> SortItemsAsync(OrderDetailsViewModel model)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<bool> EditItemAsync(ItemViewModel model)
         {
             OrderItem item = await base.GetByIdAsync(model.Id);
 
-            Order order = await _context.Orders
-                        .FirstOrDefaultAsync(x => x.Id == model.OrderId);
+            item.Quantity = model.Quantity;
+            item.Name = model.Name;
+            item.Unit = model.Unit;
 
-            if (order == null || item == null)
-            {
-                Log.Error("     NULL EditItemAsync   ");
-                return false;
-            }
-
-            OrderItem updateItem = Mapper.MapModelToItemAsync(model);
-            updateItem.Order = order;
-
-            order.Items.Remove(item);
-            order.Items.Add(updateItem);
-
-            return (_context.SaveChanges() > 0) ? true : false;
+            return await base.UpdateAsync(item);
         }
 
         public async Task<bool> DeleteItemAsync(int id)

@@ -4,7 +4,7 @@ namespace asu_management.mvc.Data
     {
         public string Number { get; set; }
         public DateTime Date { get; set; }
-        public virtual List<OrderItem> Items { get; set; } = new List<OrderItem>();
+        public virtual List<OrderItem> Items { get; set; } = new();
         public virtual Provider Provider { get; set; }
     }
 }

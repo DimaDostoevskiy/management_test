@@ -1,42 +1,40 @@
 @model OrderCreatePageModel
 
 @{
-    ViewData["Title"] = "Create Order";
+	ViewData["Title"] = "Create Order";
 }
 
-<h1>Create Order</h1>
-
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" method="post">
+	<div class="col-md-4 card">
+		<div class="card-header h4">Create Order</div>
+		<div class="card-body">
 
-            <div class="form-group">
-                <select asp-for="Order.ProviderId" class="form-select" asp-items="@Model.Providers"></select>
-            </div>
+			<form asp-action="Create">
 
-            <div class="form-group">
-                <label asp-for="Order.Number" class="control-label">Number</label>
-                <input asp-for="Order.Number" class="form-control" />
-                <span asp-validation-for="Order.Number" class="text-danger"></span>
-            </div>
+				<div class="form-group">
+					<select asp-for="Order.ProviderId" class="form-select" asp-items="@Model.Providers"></select>
+				</div>
 
-            <div class="form-group">
-                <label asp-for="Order.Date" class="control-label">Date</label>
-                <input asp-for="Order.Date" class="form-control" />
-                <span asp-validation-for="Order.Date" class="text-danger"></span>
-            </div>
+				<div class="form-group">
+					<label asp-for="Order.Number" class="control-label">Number</label>
+					<input asp-for="Order.Number" class="form-control" />
+					<span asp-validation-for="Order.Number" class="text-danger"></span>
+				</div>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+				<div class="form-group">
+					<label asp-for="Order.Date" class="control-label">Date</label>
+					<input asp-for="Order.Date" class="form-control" />
+					<span asp-validation-for="Order.Date" class="text-danger"></span>
+				</div>
 
-        </form>
-    </div>
-</div>
+				<div>
+					<input type="submit" value="Create" class="btn btn-success mt-3 w-100" />
+					<a href="/" class="btn btn-primary mt-3 w-100">Back to List</a>
+				</div>
 
-<div>
-    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+			</form>
+		</div>
+	</div>
 </div>
 
 @section Scripts {

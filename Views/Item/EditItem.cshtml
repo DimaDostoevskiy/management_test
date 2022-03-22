@@ -1,51 +1,47 @@
 @model ItemViewModel
 
 @{
-    ViewData["Title"] = "Edit Item";
+	ViewData["Title"] = "Edit Item";
 }
 
-<h1>Edit Item</h1>
-
-<h1>@Model.OrderId</h1>
-<h1>@Model.Id</h1>
-
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="EditItem">
+	<div class="col-md-4 card">
+		<div class="card-header h4">Order number: @Model.OrderNumber</div>
+		<div class="card-body">
+			
+			<form asp-action="EditItem">
 
-            <input type="hidden" asp-for="Id" value="@Model.Id" />
-            <input type="hidden" asp-for="OrderId" value="@Model.OrderId" />
+				<input type="hidden" asp-for="Id" value="@Model.Id" />
+				<input type="hidden" asp-for="OrderId" value="@Model.OrderId" />
 
-            <div class="form-group">
-                <label asp-for="Name" class="control-label">Name</label>
-                <input asp-for="Name" class="form-control"/>
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
+				<div class="form-group">
+					<label asp-for="Name" class="control-label">Name</label>
+					<input asp-for="Name" class="form-control" />
+					<span asp-validation-for="Name" class="text-danger"></span>
+				</div>
 
-            <div class="form-group">
-                <label asp-for="Quantity" class="control-label">Quantity</label>
-                <input asp-for="Quantity" class="form-control" />
-                <span asp-validation-for="Quantity" class="text-danger"></span>
-            </div>
+				<div class="form-group">
+					<label asp-for="Quantity" class="control-label">Quantity</label>
+					<input asp-for="Quantity" class="form-control" />
+					<span asp-validation-for="Quantity" class="text-danger"></span>
+				</div>
 
-            <div class="form-group">
-                <label asp-for="Unit" class="control-label">Unit</label>
-                <input asp-for="Unit" class="form-control"/>
-                <span asp-validation-for="Unit" class="text-danger"></span>
-            </div>
+				<div class="form-group">
+					<label asp-for="Unit" class="control-label">Unit</label>
+					<input asp-for="Unit" class="form-control" />
+					<span asp-validation-for="Unit" class="text-danger"></span>
+				</div>
 
-            <div class="form-group">
-                <input type="submit" value="Edit" class="btn btn-primary" />
-            </div>
+				<div>
+					<input type="submit" value="Edit" class="btn btn-success mt-3 w-100" />
+					<a href="/Order/Details/@Model.OrderId" class="btn btn-primary mt-3 w-100">Back to List</a>
+				</div>
 
-        </form>
-    </div>
+			</form>
+		</div>
+	</div>
 </div>
 
-<div>
-    <a asp-controller="Order" asp-action="Details" asp-route-id="@Model.OrderId">Back to List</a>
-</div>
 
 @section Scripts {
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

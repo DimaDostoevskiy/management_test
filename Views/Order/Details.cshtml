@@ -1,4 +1,4 @@
-@model OrderDetailsViewModel
+@model OrderDetailsPageModel
 
 @{
   ViewData["Title"] = "Order Details";
@@ -15,20 +15,28 @@
 </div>
 
 <div class="row">
-  <div class="col">
-    <a asp-controller="Item" asp-action="CreateItem" asp-route-id="@Model.Order.Id" class="btn btn-primary">Add
-      Item</a>
-  </div>
-  <div class="col">
-    <a asp-action="Edit" asp-route-id="@Model.Order.Id" class="btn btn-primary">Edit</a>
-  </div>
-  <div class="col">
-    <a asp-action="Delete" asp-route-id="@Model.Order.Id" class="btn btn-danger">Delete</a>
-  </div>
-  <div class="col">
-    <a asp-action="Index" class="btn btn-primary">Back to List</a>
-  </div>
+  <a asp-controller="Item" asp-action="CreateItem" asp-route-id="@Model.Order.Id"
+    class="col btn btn-success m-1 w-100">Add
+    Item</a>
+  <a asp-action="Edit" asp-route-id="@Model.Order.Id" class="col btn btn-primary m-1 w-100">Edit</a>
+  <a asp-action="Delete" asp-route-id="@Model.Order.Id" class="col btn btn-danger m-1 w-100">Delete</a>
+  <a asp-action="Index" class="col btn btn-primary m-1 w-100">Back to List</a>
 </div>
+
+<form asp-controller="Order" asp-action="Details" method="post">
+
+  <input type="hidden" asp-for="Order.Id" value="@Model.Order.Id" />
+
+  <div class="row">
+    Name<select asp-for="SortName" class="col form-select m-3" asp-items="@Model.SortNames"></select>
+    Quantity from<input asp-for="StartSortQuantity" type="text" class="col form-control m-3" />
+    to<input asp-for="EndSortQuantity" type="text" class="col form-control m-3" />
+    Unit<select asp-for="SortUnit" class="col form-select m-3" asp-items="@Model.SortUnits"></select>
+    <input type="submit" value="Filter" class="col btn btn-primary w-100 m-3" />
+     <a asp-controller="Order" asp-action="Details" asp-route-id="@Model.Order.Id" class="col btn btn-danger w-100 m-3">Reset</a>
+  </div>
+
+</form>
 
 <table class="table">
   <thead>
@@ -47,10 +55,10 @@
         <td>@item.Name</td>
         <td>@item.Quantity</td>
         <td>@item.Unit</td>
-        <td scope="col-1">
+        <td class="col-1">
           <a asp-controller="Item" asp-action="EditItem" asp-route-id="@item.Id" class="btn btn-primary w-100">Edit</a>
         </td>
-        <td>
+        <td class="col-1">
           <a asp-controller="Item" asp-action="DeleteItem" asp-route-id="@item.Id" class="btn btn-danger w-100">Delete</a>
         </td>
       </tr>

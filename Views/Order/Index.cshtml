@@ -36,18 +36,19 @@
         <select asp-for="ProviderId" class="form-select" asp-items="@Model.SelectProviders"></select>
       </div>
     </div>
+  </div>
 
-    <div class="row">
-      <div class="col m-3">
-        <a asp-controller="Order" asp-action="Create" class="btn btn-primary w-100">Create New Order</a>
-      </div>
-      <div class="col m-3">
-        <input type="submit" value="Filter" class="btn btn-primary w-100" />
-      </div>
-      <div class="col m-3">
-        <a asp-action="Index" class="btn btn-primary w-100">Reset Filter</a>
-      </div>
+  <div class="row">
+    <div class="col m-3">
+      <a asp-controller="Order" asp-action="Create" class="btn btn-primary w-100">Create New Order</a>
     </div>
+    <div class="col m-3">
+      <input type="submit" value="Filter" class="btn btn-primary w-100" />
+    </div>
+    <div class="col m-3">
+      <a asp-action="Index" class="btn btn-primary w-100">Reset Filter</a>
+    </div>
+  </div>
 
 </form>
 
@@ -70,6 +71,7 @@ else
         <th scope="col">Provider</th>
         <th scope="col">Items</th>
         <th scope="col"></th>
+        <th scope="col"></th>
       </tr>
     </thead>
 
@@ -81,8 +83,11 @@ else
           <td>@item.Date</td>
           <td>@item.ProviderName</td>
           <td>@item.Items.Length</td>
-          <td>
+          <td class="col-1">
             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary w-100">Details</a>
+          </td>
+          <td class="col-1">
+            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger w-100">Delete</a>
           </td>
         </tr>
       }

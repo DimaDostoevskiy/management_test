@@ -13,6 +13,6 @@ namespace asu_management.mvc.PageModel
         public int ProviderId { get; set; }
         public SelectList SelectProviders { get; set; }
         public DateTime StartSortDate { get; set; } = DateTime.Now.Date.AddMonths(-1);
-        public DateTime EndSortDate { get; set; } = DateTime.Now.Date;
+        public DateTime EndSortDate { get; set; } = DateTime.Now.Date.AddDays(1);
     }
 }

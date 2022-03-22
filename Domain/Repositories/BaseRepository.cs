@@ -1,5 +1,4 @@
 using asu_management.mvc.Data;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 

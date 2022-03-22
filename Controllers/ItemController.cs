@@ -13,6 +13,7 @@ namespace asu_management.mvc.Controllers
         {
             _repository = repository;
         }
+        
         #region Create
         // GET: Item/CreateItem/5
         [HttpGet]
@@ -31,11 +32,11 @@ namespace asu_management.mvc.Controllers
             if (ModelState.IsValid)
             {
                 return await _repository.CreateItemAsync(model)
-                ? Redirect($@"/Order/Details/{model.OrderId}")
-                : Redirect(@"/Order/Error");
+                ? Redirect($"/Order/Details/{model.OrderId}")
+                : Redirect(errorPath);
             }
 
-            Log.Warning("   NO VALID /Item/CreateItem");
+            Log.Information("   NO VALID /Item/CreateItem");
 
             return View(model);
         }

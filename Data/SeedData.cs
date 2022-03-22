@@ -1,5 +1,3 @@
-using asu_management.mvc.Domain;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Serilog;
 
 namespace asu_management.mvc.Data
@@ -22,10 +20,7 @@ namespace asu_management.mvc.Data
 
                     if (context.Providers.Any())
                     {
-                        
-
-                        Log.Information("_____Datebase is not empty");
-                        
+                        Log.Information("    Datebase is not empty");
                         return;
                     }
 
@@ -60,13 +55,13 @@ namespace asu_management.mvc.Data
                     context.OrderItems.AddRange(orderItems);
                     context.SaveChanges();
 
-                    Log.Information("  SeedData.Initialize 0k");
+                    Log.Information("    SeedData.Initialize | 0k |");
 
                     return;
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal($"   SeedData.Initialize {ex.Message}");
+                    Log.Fatal($"    SeedData.Initialize | {ex.GetType().ToString()} | {ex.Message}");
                     return;
                 }
             }

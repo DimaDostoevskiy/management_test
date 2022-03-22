@@ -20,6 +20,9 @@ public class ManagementDbContext : DbContext
                                 .HasMany(x => x.Items)
                                 .WithOne(x => x.Order);
 
+        modelBuilder.Entity<OrderItem>()
+            .Property(x => x.Quantity).HasColumnType("decimal(18, 3)");
+
         base.OnModelCreating(modelBuilder);
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

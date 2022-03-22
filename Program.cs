@@ -33,6 +33,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Configure the HTTP request pipeline.
 
+Log.Information("    Start...\n");
+
 var app = builder.Build();
 
 // Seed Data
@@ -64,6 +66,11 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+
+// От маппера "из коробки" пришлось отказаться.
+// Не корректно маппит. Скорее всего я что-то не так делаю.
+// Работаю над этим.
 
 //Mapper
 // InitializeMapper(builder.Services);
